@@ -18,6 +18,7 @@
         "react","prettier"
     ],
     "rules": {
-        "prettier/prettier":"error"
+        "prettier/prettier":"error",
+        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }]
     }
 }

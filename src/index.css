@@ -1,61 +1,21 @@
-.montserrat-medium-white-17px {
-  color: var(--white);
-  font-family: var(--font-family-montserrat);
-  font-size: 17px;
-  font-weight: 500;
-  font-style: normal;
+@font-face {
+  font-family: "master";
+  src: url(/public/Assets/GESS2.woff2) format("woff2");
 }
-.border-1px-black {
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--black);
-}
-.roboto-bold-white-13nx {
-  color: var(--white);
-  font-family: var(--font-family-roboto-bold);
-  font-size: var(--font-size-m);
-  font-weight: 700;
-  font-style: normal;
-}
-.roboto-black-white-13px {
-  color: var(--white);
-  font-family: var(--font-family-roboto);
-  font-size: var(--font-size-m);
-  font-weight: 900;
-  font-style: normal;
-}
+
 :root {
-  --black-4: rgba(0, 0, 0, 0.298);
-  --black-22: rgba(0, 0, 0, 0.349);
-  --black-5: rgba(0, 0, 0, 0.502);
-  --black-32: rgba(0, 0, 0, 0.8);
-  --black: rgba(0, 0, 0, 1);
-  --actionable-item: rgba(24, 160, 251, 1);
-  --cadet-blue: rgba(172, 179, 191, 1);
-  --mischka: rgba(208, 210, 216, 0.902);
-  --cultured-pearl: rgba(245, 245, 245, 1);
-  --white-2: rgba(255, 255, 255, 0.8);
-  --white: rgba(255, 255, 255, 1);
-  --font-size-s: 11px;
-  --font-size-m: 13px;
-  --font-size-l: 15px;
-  --font-size-xl: 16px;
-  --font-size-xl: 18px;
-  --font-size-xxl: 17px;
-  --font-size-xxl: 24px;
-  --font-size-xxxl: 25px;
-  --font-size-xxxxl: 36px;
-  --font-size-xxxxxl: 48px;
-  --font-family-cairo: "Cairo";
-  --font-family-comfortaa: "Comfortaa";
-  --font-family-montserrat: "Montserrat";
-  --font-family-roboto: "Roboto";
-  --font-family-roboto-black: "Roboto-Black";
-  --font-family-roboto-bold: "Roboto-Bold";
-  --font-family-roboto-regular: "Roboto-Regular";
-  --font-family-sf_pro_display-light: "SF Pro Display-Light";
-  --font-family-sf_pro_display-regular: "SF Pro Display-Regular";
-  --font-family-sf_pro_text-bold: "SF Pro Text-Bold";
-  --font-family-sf_pro_text-regular: "SF Pro Text-Regular";
-  --font-family-sf_pro_text-semibold: "SF Pro Text-Semibold"-;
+  --font-family-GESSTwoBold: "master";
+}
+
+html,
+body {
+  height: 100%;
+  background: url("./assets/background.png") no-repeat center center fixed;
+  background-size: cover;
+  font-family: var(--font-family-GESSTwoBold);
+  font-size: 12px;
+  color: #efefef;
+}
+#root {
+  height: 100%;
 }
