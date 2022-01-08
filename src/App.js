@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { QuizPage } from "./components/NewGame/QuizPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css/animate.min.css";
 
 export function App() {
-  /* const [isPlaying, setIsPlaying] = useState(false);
- const startPlayingHandler = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const startPlayingHandler = () => {
     setIsPlaying(true);
   };
-*/
-  const isPlaying = false;
+
   let array = [
     { id: "l1", level: "1", points: "100" },
     { id: "l2", level: "2", points: "200" },
@@ -250,6 +249,7 @@ export function App() {
               <div className="col-md-12 nopadding d-flex justify-content-center">
                 <button
                   type="button"
+                  onClick={startPlayingHandler}
                   className="btnStart animate__animated animate__fadeInDown"
                 >
                   ابدأ اللعب
