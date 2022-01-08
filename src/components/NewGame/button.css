@@ -1,0 +1,36 @@
+.button {
+  background-color: var(--actionable-item);
+  color: white;
+  font-family: var(--font-family-cairo);
+  font-size: 35px;
+  border-radius: 60px;
+
+  min-width: 192px;
+  padding: 15.3 41.3px;
+  z-index: 1999;
+}
+
+.join-today {
+  height: 21px;
+  letter-spacing: -0.26px;
+  text-align: center;
+  min-width: 109px;
+}
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 -10px #cb2dff;
+  }
+  40% {
+    box-shadow: 0 0 20px #cb2dff;
+  }
+  60% {
+    box-shadow: 0 0 20px #cb2dff;
+  }
+  100% {
+    box-shadow: 0 0 -10px #cb2dff;
+  }
+}
+
+.button-glow {
+  animation: glowing 5000ms infinite;
+}

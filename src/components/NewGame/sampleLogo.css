@@ -1,0 +1,47 @@
+@import url("../../index.css");
+
+.sample-logo {
+  align-items: center;
+  display: flex;
+  min-width: 122px;
+}
+.overlap-group {
+  align-items: flex-end;
+  background-size: 100% 100%;
+  display: flex;
+  margin-bottom: 3.56px;
+  min-width: 23px;
+}
+.union {
+  height: auto;
+  margin-bottom: 0;
+  width: 256px;
+}
+.photo {
+  height: 32px;
+  letter-spacing: -0.27px;
+  margin-left: 12px;
+  text-align: center;
+}
+.span0 {
+  letter-spacing: -0.05px;
+}
+.span1 {
+  color: var(--black);
+  font-family: var(--font-family-comfortaa);
+}
+.navigation-c {
+  align-items: center;
+  background-color: var(--white);
+  display: flex;
+  height: 60px;
+
+  position: relative;
+  width: 100%;
+}
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300&family=Comfortaa&family=Roboto:ital@1&display=swap");
+.valign-text-middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
