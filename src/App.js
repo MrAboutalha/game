@@ -50,6 +50,7 @@ export function App() {
                         left: "100%",
                         zIndex: "2",
                         top: "100%",
+                        filter: "blur(0.8px)",
                       }}
                       alt="coinSideLeftUp"
                     />{" "}
@@ -86,6 +87,7 @@ export function App() {
                         position: "relative",
                         top: "-51%",
                         left: "240%",
+                        filter: "blur(0.8px)",
                       }}
                       alt="coinSideLeftUp"
                     />
@@ -210,6 +212,7 @@ export function App() {
                         width: "70%",
                         position: "relative",
                         left: "-130%",
+                        filter: "blur(0.8px)",
                       }}
                       alt="coinSideLeftUp"
                     />
@@ -234,6 +237,7 @@ export function App() {
                         top: "-24%",
                         position: "relative",
                         left: "-115%",
+                        filter: "blur(0.6px)",
                         zIndex: 1,
                       }}
                       alt="coinSideLeftUp"
