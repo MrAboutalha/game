@@ -36,7 +36,7 @@ export function App() {
           className="d-flex justify-content-center align-items-center"
           style={{ height: "100%" }}
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <div className="col-1  col-sm-1 col-md-1 nopadding col-lg-1 d-flex justify-content-start">
                 <div className="container nopadding d-flex flex-column">
@@ -50,7 +50,7 @@ export function App() {
                         left: "100%",
                         zIndex: "2",
                         top: "100%",
-                        filter: "blur(0.8px)",
+                        transform: "rotate(35deg)",
                       }}
                       alt="coinSideLeftUp"
                     />{" "}
@@ -87,7 +87,7 @@ export function App() {
                         position: "relative",
                         top: "-51%",
                         left: "240%",
-                        filter: "blur(0.8px)",
+                        transform: "rotate(35deg)",
                       }}
                       alt="coinSideLeftUp"
                     />
@@ -212,7 +212,7 @@ export function App() {
                         width: "70%",
                         position: "relative",
                         left: "-130%",
-                        filter: "blur(0.8px)",
+                        transform: "rotate(35deg)",
                       }}
                       alt="coinSideLeftUp"
                     />
@@ -237,7 +237,7 @@ export function App() {
                         top: "-24%",
                         position: "relative",
                         left: "-115%",
-                        filter: "blur(0.6px)",
+                        transform: "rotate(-35deg)",
                         zIndex: 1,
                       }}
                       alt="coinSideLeftUp"
