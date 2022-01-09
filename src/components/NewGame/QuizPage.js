@@ -1,12 +1,52 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React from "react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 import { FaUsers } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./quizPage.css";
 
 export const QuizPage = function ss(props) {
+  const renderTime = ({ remainingTime }) => {
+    if (remainingTime === 0) {
+      return (
+        <div
+          style={{
+            fontFamily: "var(--font-family-Graphik)",
+            color: "white",
+          }}
+          className="timer"
+        >
+          أنت متأخر جدا
+        </div>
+      );
+    }
+
+    return (
+      <div className="timer">
+        <div
+          style={{
+            fontSize: "110%",
+            fontFamily: "var(--font-family-Graphik)",
+            color: "white",
+            fontWeight: "bolder",
+          }}
+        >
+          {remainingTime}
+        </div>
+        <div
+          style={{
+            color: "white",
+            fontWeight: "lighter",
+            fontFamily: "var(--font-family-GESSTwoBold)",
+          }}
+        >
+          seconds
+        </div>
+      </div>
+    );
+  };
   let levelList = <h3>NAN</h3>;
   if (props.level.length > 0) {
     levelList = props.level.map((x) => (
@@ -184,10 +224,19 @@ export const QuizPage = function ss(props) {
             style={{ height: "100%" }}
           >
             <div
-              className="d-flex flex-column justify-content-center align-items-center"
+              className="d-flex flex-column justify-content-center align-items-center animate__animated animate__slideInRight"
               style={{ height: "50%" }}
             >
-              <div id="countdown" />
+              <CountdownCircleTimer
+                size="100"
+                strokeWidth="8"
+                isPlaying
+                duration={60}
+                colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
+                onComplete={() => [true, 1000]}
+              >
+                {renderTime}
+              </CountdownCircleTimer>
             </div>
             <div
               className="d-flex flex-column  justify-content-center align-items-items"
@@ -199,7 +248,7 @@ export const QuizPage = function ss(props) {
                 style={{
                   marginLeft: "auto",
                   marginRight: "auto",
-                  marginBottom: "2%",
+                  marginBottom: "10%",
                 }}
               >
                 <FaUsers style={{ width: "100%", color: "#682481" }} />
