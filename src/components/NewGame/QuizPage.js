@@ -1,7 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React from "react";
-import { FaPercent, FaUsers } from "react-icons/fa";
+
+import { FaUsers } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./quizPage.css";
 
@@ -48,7 +49,7 @@ export const QuizPage = function ss(props) {
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row " style={{ height: "100%" }}>
-        <div className="col-3 d-flex justify-content-start">
+        <div className="col-2 d-flex justify-content-start">
           <div
             className="container nopadding d-flex flex-column"
             style={{ height: "90%" }}
@@ -65,14 +66,14 @@ export const QuizPage = function ss(props) {
               />{" "}
             </div>
             <div
-              className="d-flex flex-column flex-grow-1"
+              className="d-flex flex-column flex-grow-1 glow"
               style={{ position: "relative", left: "12%", top: "5%" }}
             >
               {levelList}
             </div>{" "}
           </div>
         </div>
-        <div className="col d-flex justify-content-center">
+        <div className="col-8 d-flex justify-content-center">
           {" "}
           <div
             className="d-flex flex-column "
@@ -80,7 +81,7 @@ export const QuizPage = function ss(props) {
           >
             <div
               className="d-flex flex-fill "
-              style={{ background: "red", width: "100%", textAlign: "center" }}
+              style={{ width: "100%", textAlign: "center" }}
             >
               ddd
             </div>
@@ -163,14 +164,17 @@ export const QuizPage = function ss(props) {
             </div>
           </div>
         </div>
-        <div className="col-3">
+        <div className="col-2">
           {" "}
           <div
             className="d-flex flex-column justify-content-center align-items-items"
             style={{ height: "100%" }}
           >
-            <div className=" " style={{ height: "50%" }}>
-              dd
+            <div
+              className="d-flex flex-column justify-content-center align-items-center"
+              style={{ height: "50%" }}
+            >
+              <div id="countdown">ss</div>
             </div>
             <div
               className="d-flex flex-column  justify-content-center align-items-items"
@@ -185,14 +189,18 @@ export const QuizPage = function ss(props) {
                   marginBottom: "2%",
                 }}
               >
-                <FaUsers style={{ width: "100%" }} />
+                <FaUsers style={{ width: "100%", color: "#682481" }} />
               </button>
               <button
                 type="button"
                 className="btn btn-warning btn-circle btn-md"
-                style={{ marginLeft: "auto", marginRight: "auto" }}
+                style={{
+                  color: "#540e66",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
               >
-                <FaPercent style={{ width: "100%" }} />
+                50:50
               </button>
             </div>
           </div>
