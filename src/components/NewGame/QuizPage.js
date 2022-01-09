@@ -7,19 +7,27 @@ export const QuizPage = function ss(props) {
   let levelList = <h3>NAN</h3>;
   if (props.level.length > 0) {
     levelList = props.level.map((x) => (
-      <div className="flex-fill">
+      <div className="flex-fill d-flex flex-row">
         <div
           style={{
             width: "10%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "green",
+            background: "#50bb6b",
+            color: "white",
+            fontWeight: "bolder",
             height: "100%",
           }}
         >
           {x.level}
         </div>
+        &nbsp;
+        <span style={{ color: "white" }}>
+          {" "}
+          {x.points}
+          <sup>pts</sup>
+        </span>
       </div>
     ));
     // eslint-disable-next-line no-unused-vars
@@ -46,7 +54,7 @@ export const QuizPage = function ss(props) {
             </div>
             <div
               className="d-flex flex-column flex-grow-1"
-              style={{ marginTop: "10%" }}
+              style={{ position: "relative", left: "12%", top: "5%" }}
             >
               {levelList}
             </div>{" "}
