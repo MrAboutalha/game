@@ -13,8 +13,8 @@ export function App() {
   let array = [
     { id: "l1", level: "1", points: "100" },
     { id: "l2", level: "2", points: "200" },
-    { id: "l3", level: "3", points: "100" },
-    { id: "l4", level: "4", points: "200" },
+    { id: "l3", level: "3", points: "300" },
+    { id: "l4", level: "4", points: "400" },
     { id: "l5", level: "5", points: "500" },
     { id: "l6", level: "6", points: "600" },
     { id: "l7", level: "7", points: "700" },

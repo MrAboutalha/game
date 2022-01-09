@@ -1,7 +1,9 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React from "react";
+import { FaPercent, FaUsers } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./quizPage.css";
 
 export const QuizPage = function ss(props) {
   let levelList = <h3>NAN</h3>;
@@ -10,6 +12,8 @@ export const QuizPage = function ss(props) {
       <div className="flex-fill d-flex flex-row">
         <div
           style={{
+            fontFamily: "var(--font-family-Graphik)",
+
             width: "10%",
             display: "flex",
             alignItems: "center",
@@ -22,15 +26,23 @@ export const QuizPage = function ss(props) {
         >
           {x.level}
         </div>
-        &nbsp;
-        <span style={{ color: "white" }}>
+        &nbsp; &nbsp;
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontWeight: "bolder",
+            fontFamily: "var(--font-family-Graphik)",
+          }}
+        >
           {" "}
           {x.points}
           <sup>pts</sup>
-        </span>
+        </div>
       </div>
     ));
-    // eslint-disable-next-line no-unused-vars
   }
 
   return (
@@ -60,14 +72,129 @@ export const QuizPage = function ss(props) {
             </div>{" "}
           </div>
         </div>
-        <div className="col d-flex justify-content-center">ff</div>
-        <div className="col-3 d-flex justify-content-center">
+        <div className="col d-flex justify-content-center">
           {" "}
-          <div className="container nopadding d-flex flex-column">
-            <div className="row mb-auto  nopadding justify-content-center">
-              ss
+          <div
+            className="d-flex flex-column "
+            style={{ height: "100%", width: "100%" }}
+          >
+            <div
+              className="d-flex flex-fill "
+              style={{ background: "red", width: "100%", textAlign: "center" }}
+            >
+              ddd
             </div>
-            <div className="row nopadding justify-content-center">ss</div>
+            <div
+              className="d-flex flex-fill align-items-end justify-content-center"
+              style={{
+                width: "100%",
+                textAlign: "center",
+              }}
+            >
+              <div
+                className="d-flex btnAnsw flex-row align-items-center justify-content-center"
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  background: "#16ad85",
+                  borderRadius: "19px",
+                  color: "white",
+                  fontFamily: " var(--font-family-GESSTwoBold)",
+                  borderColor: "white",
+                }}
+              >
+                شنو هي الرتبة لي حتل المنتخب في مونديال 98 ؟
+              </div>
+            </div>
+            <div
+              className="d-flex flex-column justify-content-center align-items-center flex-fill "
+              style={{ width: "100%" }}
+            >
+              <div className="d-flex flex-row" style={{ width: "100%" }}>
+                <button
+                  type="button"
+                  className="btnAnsw"
+                  style={{
+                    marginLeft: "3%",
+                    marginRight: "1.5%",
+                    width: "100%",
+                  }}
+                >
+                  الرتبة 5
+                </button>
+                <button
+                  type="button"
+                  className="btnAnsw"
+                  style={{
+                    marginRight: "3%",
+                    marginLeft: "1.5%",
+                    width: "100%",
+                  }}
+                >
+                  الرتبة 2
+                </button>
+              </div>
+              <div className="d-flex flex-row" style={{ width: "100%" }}>
+                <button
+                  type="button"
+                  className="btnAnsw"
+                  style={{
+                    marginLeft: "3%",
+                    marginRight: "1.5%",
+                    marginTop: "2%",
+                    width: "100%",
+                  }}
+                >
+                  الرتبة 5
+                </button>
+                <button
+                  type="button"
+                  className="btnAnsw"
+                  style={{
+                    marginRight: "3%",
+                    marginLeft: "1.5%",
+                    marginTop: "2%",
+                    width: "100%",
+                  }}
+                >
+                  الرتبة 1
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-3">
+          {" "}
+          <div
+            className="d-flex flex-column justify-content-center align-items-items"
+            style={{ height: "100%" }}
+          >
+            <div className=" " style={{ height: "50%" }}>
+              dd
+            </div>
+            <div
+              className="d-flex flex-column  justify-content-center align-items-items"
+              style={{ height: "50%" }}
+            >
+              <button
+                type="button"
+                className="btn btn-warning btn-circle btn-md"
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginBottom: "2%",
+                }}
+              >
+                <FaUsers style={{ width: "100%" }} />
+              </button>
+              <button
+                type="button"
+                className="btn btn-warning btn-circle btn-md"
+                style={{ marginLeft: "auto", marginRight: "auto" }}
+              >
+                <FaPercent style={{ width: "100%" }} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
