@@ -43,7 +43,6 @@ export function App() {
                   <div className="row mb-auto  nopadding">
                     <img
                       src="/Assets/coinDown.png"
-                      className="animate__animated animate__fadeIn"
                       style={{
                         position: "relative",
                         left: "100%",
@@ -55,7 +54,7 @@ export function App() {
                     />{" "}
                     <img
                       src="/Assets/glow.png"
-                      className="animate__animated animate__fadeIn"
+                      className="animate__animated animate__pulse animate__infinite"
                       style={{
                         position: "relative",
                         left: "100%",
@@ -69,7 +68,7 @@ export function App() {
                   <div className="row nopadding">
                     <img
                       src="/Assets/glow.png"
-                      className="animate__animated animate__fadeIn"
+                      className="animate__animated animate__pulse animate__infinite"
                       style={{
                         position: "relative",
                         left: "240%",
@@ -80,7 +79,6 @@ export function App() {
                     />
                     <img
                       src="/Assets/coin11.png"
-                      className="animate__animated animate__fadeIn"
                       style={{
                         width: "70%",
                         position: "relative",
@@ -96,7 +94,7 @@ export function App() {
               <div className="col-2 col-sm-2 col-md-2 nopadding col-lg-2 d-flex justify-content-end">
                 <img
                   src="/Assets/glow.png"
-                  className="animate__animated animate__fadeIn"
+                  className="animate__animated animate__pulse animate__infinite"
                   style={{
                     position: "relative",
                     left: "170%",
@@ -109,7 +107,7 @@ export function App() {
                 />
                 <img
                   src="/Assets/leftSide.png"
-                  className="animate__animated animate__zoomInDown"
+                  className="animate__animated animate__pulse animate__infinite"
                   style={{
                     position: "relative",
                     left: "87%",
@@ -130,7 +128,7 @@ export function App() {
                     position: "relative",
                     zIndex: "3",
                     top: "29%",
-                    left: "120%",
+                    left: "117%",
                     mixBlendMode: "lighten",
                   }}
                   alt="shineLogo
@@ -163,7 +161,7 @@ export function App() {
               <div className="col-2  col-sm-2 col-md-2 nopadding col-lg-2 d-flex justify-content-start">
                 <img
                   src="/Assets/glow.png"
-                  className="animate__animated animate__fadeIn"
+                  className="animate__animated animate__pulse animate__infinite"
                   style={{
                     position: "relative",
                     left: "-80%",
@@ -176,7 +174,7 @@ export function App() {
                 />
                 <img
                   src="/Assets/rightSide.png"
-                  className="animate__animated animate__zoomInDown"
+                  className="animate__animated animate__pulse animate__infinite"
                   style={{
                     position: "relative",
                     left: "-290%",
@@ -193,7 +191,7 @@ export function App() {
                   <div className="row mb-auto  nopadding">
                     <img
                       src="/Assets/glow.png"
-                      className="animate__animated animate__fadeIn"
+                      className="animate__animated animate__pulse animate__infinite"
                       style={{
                         position: "relative",
                         left: "-144%",
@@ -205,7 +203,6 @@ export function App() {
                       alt="coinSideLeftUp"
                     />
                     <img
-                      className="animate__animated animate__fadeIn"
                       src="/Assets/coin11.png"
                       style={{
                         width: "70%",
@@ -219,7 +216,7 @@ export function App() {
                   <div className="row nopadding">
                     <img
                       src="/Assets/glow.png"
-                      className="animate__animated animate__fadeIn"
+                      className="animate__animated animate__pulse animate__infinite"
                       style={{
                         position: "relative",
                         left: "-80%",
@@ -231,12 +228,11 @@ export function App() {
                     />
                     <img
                       src="/Assets/coin11.png"
-                      className="animate__animated animate__fadeIn"
                       style={{
                         top: "-24%",
                         position: "relative",
                         left: "-115%",
-                        transform: "rotate(-35deg)",
+                        transform: "rotate(-15deg)",
                         zIndex: 1,
                       }}
                       alt="coinSideLeftUp"

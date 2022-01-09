@@ -2,9 +2,13 @@
   font-family: "master";
   src: url(/public/Assets/GESS2.woff2) format("woff2");
 }
-
+@font-face {
+  font-family: "master2";
+  src: url(/public/Assets/Graphik.woff2) format("woff2");
+}
 :root {
   --font-family-GESSTwoBold: "master";
+  --font-family-Graphik: "master2";
 }
 
 html,
@@ -13,7 +17,7 @@ body {
   background: url("./assets/background.png") no-repeat center center fixed;
   background-size: cover;
   font-family: var(--font-family-GESSTwoBold);
-  font-size: 12px;
+  font-size: 80%;
   color: #efefef;
 }
 #root {
