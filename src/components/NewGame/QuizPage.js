@@ -12,6 +12,7 @@ export const QuizPage = function ss(props) {
     levelList = props.level.map((x) => (
       <div className="flex-fill d-flex flex-row">
         <div
+          key={x.level}
           style={{
             fontFamily: "var(--font-family-Graphik)",
 
@@ -29,6 +30,7 @@ export const QuizPage = function ss(props) {
         </div>
         &nbsp; &nbsp;
         <div
+          key={x.points}
           style={{
             display: "flex",
             alignItems: "center",
@@ -56,6 +58,7 @@ export const QuizPage = function ss(props) {
           >
             <div className="">
               <img
+                className="animate__animated animate__wobble animate__infinite"
                 src="/Assets/Logo.png"
                 style={{
                   position: "relative",
@@ -67,7 +70,12 @@ export const QuizPage = function ss(props) {
             </div>
             <div
               className="d-flex flex-column flex-grow-1 glow"
-              style={{ position: "relative", left: "12%", top: "5%" }}
+              style={{
+                fontSize: "80%",
+                position: "relative",
+                left: "12%",
+                top: "5%",
+              }}
             >
               {levelList}
             </div>{" "}
@@ -80,11 +88,16 @@ export const QuizPage = function ss(props) {
             style={{ height: "100%", width: "100%" }}
           >
             <div
-              className="d-flex flex-fill "
-              style={{ width: "100%", textAlign: "center" }}
-            >
-              ddd
-            </div>
+              className="d-flex "
+              style={{
+                backgroundImage: "url(/Assets/back.png)",
+                backgroundSize: "cover",
+                filter: "blur(0.5px)",
+                width: "100%",
+                height: "40%",
+                textAlign: "center",
+              }}
+            />
             <div
               className="d-flex flex-fill align-items-end justify-content-center"
               style={{
@@ -93,7 +106,7 @@ export const QuizPage = function ss(props) {
               }}
             >
               <div
-                className="d-flex btnAnsw flex-row align-items-center justify-content-center"
+                className="d-flex btnAnsw flex-row align-items-center animate__animated animate__pulse animate__infinite justify-content-center"
                 style={{
                   width: "100%",
                   height: "50%",
@@ -174,7 +187,7 @@ export const QuizPage = function ss(props) {
               className="d-flex flex-column justify-content-center align-items-center"
               style={{ height: "50%" }}
             >
-              <div id="countdown">ss</div>
+              <div id="countdown" />
             </div>
             <div
               className="d-flex flex-column  justify-content-center align-items-items"
@@ -182,7 +195,7 @@ export const QuizPage = function ss(props) {
             >
               <button
                 type="button"
-                className="btn btn-warning btn-circle btn-md"
+                className="btn a btn-warning animate__animated animate__slideInRight btn-circle btn-md"
                 style={{
                   marginLeft: "auto",
                   marginRight: "auto",
@@ -193,7 +206,7 @@ export const QuizPage = function ss(props) {
               </button>
               <button
                 type="button"
-                className="btn btn-warning btn-circle btn-md"
+                className="btn btn-warning animate__animated animate__slideInRight btn-circle btn-md"
                 style={{
                   color: "#540e66",
                   marginLeft: "auto",

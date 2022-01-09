@@ -17,7 +17,6 @@ body {
   background: url("./assets/background.png") no-repeat center center fixed;
   background-size: cover;
   font-family: var(--font-family-GESSTwoBold);
-  font-size: 80%;
   color: #efefef;
 }
 #root {
