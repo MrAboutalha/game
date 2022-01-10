@@ -136,6 +136,7 @@ export const QuizPage = function ss(props) {
                 width: "100%",
                 height: "40%",
                 textAlign: "center",
+                backgroundPosition: "0 0",
               }}
             />
             <div
