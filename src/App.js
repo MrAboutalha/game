@@ -457,43 +457,50 @@ export function App() {
   const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
     let viewedQuestions = "";
     let i;
-    const questionsStored = localStorage
-      .getItem("QuestionAlreadyChosen")
-      .split("/");
-    for (i = 0; i < 4; i += 1) {
-      for (let j = 0; j <= questionsStored.length; j += 1) {
-        if (questionsStored[j] == levelEntry + i) {
-          viewedQuestions = viewedQuestions.concat(levelEntry + i, "/");
-          break;
+    let indices = [
+      (levelEntry, "0"),
+      (levelEntry, "1"),
+      (levelEntry, "2"),
+      (levelEntry, "3"),
+    ];
+    if (localStorage.getItem("QuestionAlreadyChosen") != null) {
+      const questionsStored = localStorage
+        .getItem("QuestionAlreadyChosen")
+        .split("/");
+      for (i = 0; i < 4; i += 1) {
+        for (let j = 0; j <= questionsStored.length; j += 1) {
+          if (questionsStored[j] == levelEntry + i) {
+            viewedQuestions = viewedQuestions.concat(levelEntry + i, "/");
+            break;
+          }
         }
       }
-    }
-    const viewedQuestionsArray = viewedQuestions.split("/");
-    // eslint-disable-next-line prefer-const
-    let indices = [(levelEntry, "0"), (levelEntry, "2"), (levelEntry, "3")];
-    for (let v = 0; v < 4; v += 1) {
-      for (let k = 0; k <= viewedQuestionsArray.length; k += 1) {
-        if (viewedQuestionsArray[k] === indices[v]) {
-          indices.splice(v, 1);
-          break;
+      const viewedQuestionsArray = viewedQuestions.split("/");
+      // eslint-disable-next-line prefer-const
+
+      for (let v = 0; v < 4; v += 1) {
+        for (let k = 0; k <= viewedQuestionsArray.length; k += 1) {
+          if (viewedQuestionsArray[k] === indices[v]) {
+            indices.splice(v, 1);
+            break;
+          }
         }
       }
-    } /* 
-    if (indices.length === 0) {
-      indices = [
-        levelEntry.concat("0"),
-        levelEntry.concat("1"),
-        levelEntry.concat("2"),
-        levelEntry.concat("3"),
-      ];
+      if (indices.length === 0) {
+        indices = [
+          levelEntry.concat("0"),
+          levelEntry.concat("1"),
+          levelEntry.concat("2"),
+          levelEntry.concat("3"),
+        ];
+      }
     }
     const QuestionWhichGonnaBeShown =
-      indices[Math.floor(Math.random() * indices.length)]; */
-    console.log("dddddee", viewedQuestions);
-    console.log(localStorage.getItem("QuestionAlreadyChosen"));
-    tempo = questions[0][1].content;
+      indices[Math.floor(Math.random() * indices.length)];
+    localStorageSetQuestionAlreadyChosen("01");
+    tempo = questions[0][QuestionWhichGonnaBeShown].content;
   };
-  localStorageCheckForQuestionIfItWasAlreadyChosen(0);
+  localStorageCheckForQuestionIfItWasAlreadyChosen(level);
   array = array.reverse();
   return (
     <>

@@ -89,7 +89,7 @@ export const QuizPage = function ss(props) {
       <div className="row " style={{ height: "100%" }}>
         <div className="col-2 d-flex justify-content-start">
           <div
-            className="container nopadding d-flex flex-column"
+            className="container nopadding d-flex flex-column animate__animated animate__slideInLeft"
             style={{ height: "90%" }}
           >
             <div
@@ -116,9 +116,9 @@ export const QuizPage = function ss(props) {
               style={{
                 backgroundImage: "url(/Assets/back3.png)",
                 backgroundSize: "cover",
-                filter: "blur(0.5px)",
+
                 width: "100%",
-                height: "40%",
+                height: "47%",
                 textAlign: "center",
                 backgroundPosition: "0 0",
               }}
@@ -140,16 +140,17 @@ export const QuizPage = function ss(props) {
                   color: "white",
                   fontFamily: " var(--font-family-GESSTwoBold)",
                   borderColor: "white",
+                  lineHeight: "300%",
                 }}
               >
                 شنو هي الرتبة لي حتل المنتخب في مونديال 98 ؟
               </div>
             </div>
             <div
-              className="d-flex flex-column justify-content-start align-items-center flex-fill "
+              className="d-flex flex-column justify-content-start align-items-center flex-fill animate__animated animate__backInUp"
               style={{ width: "100%" }}
             >
-              <Answers answers={props.answersFromApp} />
+              <Answers answers={props.answersFromApp} className="" />
             </div>
           </div>
         </div>
