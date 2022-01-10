@@ -435,10 +435,7 @@ export function App() {
   // entries
   let tempo;
   const [chosenAnswers, setChosenAnswers] = useState([]);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const startPlayingHandler = () => {
-    setIsPlaying(true);
-  };
+
   const [level, setLevel] = useState(1);
   const submitingAnswer = () => {
     setLevel(level + 1);
@@ -448,10 +445,16 @@ export function App() {
   const localStorageSetQuestionAlreadyChosen = (questionComposedId) => {
     const forwardSlash = "/";
     const entryModified = forwardSlash.concat(questionComposedId, forwardSlash);
-    localStorage.setItem(
-      "QuestionAlreadyChosen",
-      localStorage.getItem("QuestionAlreadyChosen").concat(entryModified)
-    );
+    if (localStorage.getItem("QuestionAlreadyChosen") != null) {
+      localStorage.setItem(
+        "QuestionAlreadyChosen",
+        localStorage.getItem("QuestionAlreadyChosen") + entryModified
+      );
+      console.log("here");
+    } else {
+      localStorage.setItem("QuestionAlreadyChosen", entryModified);
+      console.log("out");
+    }
   };
   // check which sub-questions for a single main question have already been presented and suggest one new
   const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
@@ -497,11 +500,17 @@ export function App() {
     }
     const QuestionWhichGonnaBeShown =
       indices[Math.floor(Math.random() * indices.length)];
-    localStorageSetQuestionAlreadyChosen("01");
+    localStorageSetQuestionAlreadyChosen(
+      levelEntry + QuestionWhichGonnaBeShown
+    );
     tempo = questions[0][QuestionWhichGonnaBeShown].content;
   };
   localStorageCheckForQuestionIfItWasAlreadyChosen(level);
   array = array.reverse();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const startPlayingHandler = () => {
+    setIsPlaying(true);
+  };
   return (
     <>
       {!isPlaying && (
@@ -568,7 +577,7 @@ export function App() {
               <div className="col-2 col-sm-2 col-md-2 nopadding col-lg-2 d-flex justify-content-end">
                 <img
                   src="/Assets/glow.png"
-                  className="animate__animated animate__pulse animate__infinite"
+                  className="animate__animated animate__pulse animate__infinite speedRalenti"
                   style={{
                     position: "relative",
                     left: "170%",
@@ -581,7 +590,7 @@ export function App() {
                 />
                 <img
                   src="/Assets/leftSide.png"
-                  className="animate__animated animate__pulse animate__infinite"
+                  className="animate__animated animate__pulse animate__infinite  speedRalenti"
                   style={{
                     position: "relative",
                     left: "87%",
@@ -595,7 +604,7 @@ export function App() {
               <div className="col-6 col-sm-6 col-md-6 nopadding col-sm-4 col-lg-6 d-flex justify-content-center">
                 <img
                   src="/Assets/shine.png"
-                  className="animate__animated animate__rotateIn animate__infinite"
+                  className="animate__animated animate__rotateIn animate__infinite "
                   style={{
                     width: "15%",
                     height: "20%",
@@ -635,7 +644,7 @@ export function App() {
               <div className="col-2  col-sm-2 col-md-2 nopadding col-lg-2 d-flex justify-content-start">
                 <img
                   src="/Assets/glow.png"
-                  className="animate__animated animate__pulse animate__infinite"
+                  className="animate__animated animate__pulse animate__infinite speedRalenti"
                   style={{
                     position: "relative",
                     left: "-80%",
@@ -648,7 +657,7 @@ export function App() {
                 />
                 <img
                   src="/Assets/rightSide.png"
-                  className="animate__animated animate__pulse animate__infinite"
+                  className="animate__animated animate__pulse animate__infinite speedRalenti"
                   style={{
                     position: "relative",
                     left: "-290%",
@@ -665,7 +674,7 @@ export function App() {
                   <div className="row mb-auto  nopadding">
                     <img
                       src="/Assets/glow.png"
-                      className="animate__animated animate__pulse animate__infinite"
+                      className="animate__animated animate__pulse animate__infinite speedRalenti"
                       style={{
                         position: "relative",
                         left: "-144%",
@@ -677,6 +686,7 @@ export function App() {
                       alt="coinSideLeftUp"
                     />
                     <img
+                      className="animate__animated animate__pulse animate__infinite speedRalenti"
                       src="/Assets/coin11.png"
                       style={{
                         width: "70%",
@@ -690,7 +700,7 @@ export function App() {
                   <div className="row nopadding">
                     <img
                       src="/Assets/glow.png"
-                      className="animate__animated animate__pulse animate__infinite"
+                      className="animate__animated animate__pulse animate__infinite speedRalenti"
                       style={{
                         position: "relative",
                         left: "-80%",
@@ -701,6 +711,7 @@ export function App() {
                       alt="coinSideLeftUp"
                     />
                     <img
+                      className="animate__animated animate__pulse animate__infinite speedRalenti"
                       src="/Assets/coin11.png"
                       style={{
                         top: "-24%",
