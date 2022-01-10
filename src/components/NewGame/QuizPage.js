@@ -2,10 +2,9 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-
-import { FaUsers } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./quizPage.css";
+import { Answers } from "./Answers";
 
 export const QuizPage = function ss(props) {
   const renderTime = ({ remainingTime }) => {
@@ -17,9 +16,7 @@ export const QuizPage = function ss(props) {
             color: "white",
           }}
           className="timer"
-        >
-          أنت متأخر جدا
-        </div>
+        />
       );
     }
 
@@ -70,7 +67,6 @@ export const QuizPage = function ss(props) {
         </div>
         &nbsp; &nbsp;
         <div
-          key={x.points}
           style={{
             display: "flex",
             alignItems: "center",
@@ -96,18 +92,6 @@ export const QuizPage = function ss(props) {
             className="container nopadding d-flex flex-column"
             style={{ height: "90%" }}
           >
-            <div className="">
-              <img
-                className="animate__animated animate__wobble animate__infinite"
-                src="/Assets/Logo.png"
-                style={{
-                  position: "relative",
-                  top: "25%",
-                  width: "90%",
-                }}
-                alt="coinSideLeftUp"
-              />{" "}
-            </div>
             <div
               className="d-flex flex-column flex-grow-1 glow"
               style={{
@@ -147,7 +131,7 @@ export const QuizPage = function ss(props) {
               }}
             >
               <div
-                className="d-flex btnAnsw flex-row align-items-center animate__animated animate__pulse animate__infinite justify-content-center"
+                className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
                 style={{
                   width: "100%",
                   height: "50%",
@@ -165,56 +149,7 @@ export const QuizPage = function ss(props) {
               className="d-flex flex-column justify-content-start align-items-center flex-fill "
               style={{ width: "100%" }}
             >
-              <div className="d-flex flex-row" style={{ width: "100%" }}>
-                <button
-                  type="button"
-                  className="btnAnsw"
-                  style={{
-                    marginLeft: "3%",
-                    marginRight: "1.5%",
-                    width: "100%",
-                  }}
-                >
-                  الرتبة 5
-                </button>
-                <button
-                  type="button"
-                  className="btnAnsw"
-                  style={{
-                    marginRight: "3%",
-                    marginLeft: "1.5%",
-                    width: "100%",
-                  }}
-                >
-                  الرتبة 2
-                </button>
-              </div>
-              <div className="d-flex flex-row" style={{ width: "100%" }}>
-                <button
-                  type="button"
-                  className="btnAnsw"
-                  style={{
-                    marginLeft: "3%",
-                    marginRight: "1.5%",
-                    marginTop: "2%",
-                    width: "100%",
-                  }}
-                >
-                  الرتبة 5
-                </button>
-                <button
-                  type="button"
-                  className="btnAnsw"
-                  style={{
-                    marginRight: "3%",
-                    marginLeft: "1.5%",
-                    marginTop: "2%",
-                    width: "100%",
-                  }}
-                >
-                  الرتبة 1
-                </button>
-              </div>
+              <Answers answers={props.answersFromApp} />
             </div>
           </div>
         </div>
@@ -252,7 +187,7 @@ export const QuizPage = function ss(props) {
                   marginBottom: "10%",
                 }}
               >
-                <FaUsers style={{ width: "100%", color: "#682481" }} />
+                <img src="/Assets/crowd.png" alt="crowd " width="60%" />
               </button>
               <button
                 type="button"

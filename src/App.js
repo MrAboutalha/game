@@ -1,15 +1,420 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import { reactLocalStorage } from "reactjs-localstorage";
 import "./App.css";
 import { QuizPage } from "./components/NewGame/QuizPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css/animate.min.css";
 
 export function App() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const startPlayingHandler = () => {
-    setIsPlaying(true);
-  };
-
+  const questions = [
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+    [
+      {
+        question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
+        content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
+        correct: 1,
+      },
+      {
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        content: [
+          "جهاز قياس سرعة الرياح",
+          "جهاز التوتر",
+          "جهاز قياس التيار",
+          "جهاز قياس المقاومة ",
+        ],
+        correct: 1,
+      },
+      {
+        question: "أصعب لغات العالم هي لغة أهل إقليم الباسك في",
+        content: ["فرنسا", "إريتريا", "أوكرانيا", "أسبانيا"],
+        correct: 1,
+      },
+      {
+        question: "كم عدد الساعات في اليوم الواحد",
+        content: ["22", "23", "12", "24"],
+        correct: 4,
+      },
+    ],
+  ];
   let array = [
     { id: "l1", level: "1", points: "100" },
     { id: "l2", level: "2", points: "200" },
@@ -27,6 +432,68 @@ export function App() {
     { id: "l14", level: "14", points: "1400" },
     { id: "l15", level: "15", points: "1500" },
   ];
+  // entries
+  let tempo;
+  const [chosenAnswers, setChosenAnswers] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const startPlayingHandler = () => {
+    setIsPlaying(true);
+  };
+  const [level, setLevel] = useState(1);
+  const submitingAnswer = () => {
+    setLevel(level + 1);
+  };
+
+  // add to the localStorage the preseneted question
+  const localStorageSetQuestionAlreadyChosen = (questionComposedId) => {
+    const forwardSlash = "/";
+    const entryModified = forwardSlash.concat(questionComposedId, forwardSlash);
+    localStorage.setItem(
+      "QuestionAlreadyChosen",
+      localStorage.getItem("QuestionAlreadyChosen").concat(entryModified)
+    );
+  };
+  // check which sub-questions for a single main question have already been presented and suggest one new
+  const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
+    let viewedQuestions = "";
+    let i;
+    const questionsStored = localStorage
+      .getItem("QuestionAlreadyChosen")
+      .split("/");
+    for (i = 0; i < 4; i += 1) {
+      for (let j = 0; j <= questionsStored.length; j += 1) {
+        if (questionsStored[j] == levelEntry + i) {
+          viewedQuestions = viewedQuestions.concat(levelEntry + i, "/");
+          break;
+        }
+      }
+    }
+    const viewedQuestionsArray = viewedQuestions.split("/");
+    // eslint-disable-next-line prefer-const
+    let indices = [(levelEntry, "0"), (levelEntry, "2"), (levelEntry, "3")];
+    for (let v = 0; v < 4; v += 1) {
+      for (let k = 0; k <= viewedQuestionsArray.length; k += 1) {
+        if (viewedQuestionsArray[k] === indices[v]) {
+          indices.splice(v, 1);
+          break;
+        }
+      }
+    } /* 
+    if (indices.length === 0) {
+      indices = [
+        levelEntry.concat("0"),
+        levelEntry.concat("1"),
+        levelEntry.concat("2"),
+        levelEntry.concat("3"),
+      ];
+    }
+    const QuestionWhichGonnaBeShown =
+      indices[Math.floor(Math.random() * indices.length)]; */
+    console.log("dddddee", viewedQuestions);
+    console.log(localStorage.getItem("QuestionAlreadyChosen"));
+    tempo = questions[0][1].content;
+  };
+  localStorageCheckForQuestionIfItWasAlreadyChosen(0);
   array = array.reverse();
   return (
     <>
@@ -255,7 +722,7 @@ export function App() {
           </div>
         </div>
       )}
-      {isPlaying && <QuizPage level={array} />}
+      {isPlaying && <QuizPage level={array} answersFromApp={tempo} />}
     </>
   );
 }
