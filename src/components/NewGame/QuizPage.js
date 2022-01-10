@@ -130,7 +130,7 @@ export const QuizPage = function ss(props) {
             <div
               className="d-flex "
               style={{
-                backgroundImage: "url(/Assets/back.png)",
+                backgroundImage: "url(/Assets/back3.png)",
                 backgroundSize: "cover",
                 filter: "blur(0.5px)",
                 width: "100%",
@@ -139,7 +139,7 @@ export const QuizPage = function ss(props) {
               }}
             />
             <div
-              className="d-flex flex-fill align-items-end justify-content-center"
+              className="d-flex flex-column flex-fill align-items-start justify-content-start"
               style={{
                 width: "100%",
                 textAlign: "center",
@@ -161,7 +161,7 @@ export const QuizPage = function ss(props) {
               </div>
             </div>
             <div
-              className="d-flex flex-column justify-content-center align-items-center flex-fill "
+              className="d-flex flex-column justify-content-start align-items-center flex-fill "
               style={{ width: "100%" }}
             >
               <div className="d-flex flex-row" style={{ width: "100%" }}>
