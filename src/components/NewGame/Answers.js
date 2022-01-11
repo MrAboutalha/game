@@ -5,9 +5,6 @@ import React from "react";
 
 export const Answers = function ff(props) {
   const [ans1, ans2, ans3, ans4] = props.answers;
-  const localStorageAnswerChosen = (event) => {
-    localStorage.setItem("answerChosen", event.target.value);
-  };
 
   return (
     <>
@@ -22,7 +19,6 @@ export const Answers = function ff(props) {
             width: "100%",
           }}
           value={ans1}
-          onClick={localStorageAnswerChosen}
         >
           {ans1}
         </button>
@@ -35,7 +31,6 @@ export const Answers = function ff(props) {
             width: "100%",
           }}
           value={ans2}
-          onClick={localStorageAnswerChosen}
         >
           {ans2}
         </button>
@@ -51,7 +46,6 @@ export const Answers = function ff(props) {
             width: "100%",
           }}
           value={ans3}
-          onClick={localStorageAnswerChosen}
         >
           {ans3}
         </button>
@@ -65,7 +59,6 @@ export const Answers = function ff(props) {
             width: "100%",
           }}
           value={ans4}
-          onClick={localStorageAnswerChosen}
         >
           {ans4}
         </button>

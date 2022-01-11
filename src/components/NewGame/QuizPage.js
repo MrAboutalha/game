@@ -143,7 +143,7 @@ export const QuizPage = function ss(props) {
                   lineHeight: "300%",
                 }}
               >
-                شنو هي الرتبة لي حتل المنتخب في مونديال 98 ؟
+                {props.questionFromApp}{" "}
               </div>
             </div>
             <div

@@ -1,7 +1,7 @@
+/* eslint-disable prefer-template */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { reactLocalStorage } from "reactjs-localstorage";
 import "./App.css";
 import { QuizPage } from "./components/NewGame/QuizPage";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -433,82 +433,78 @@ export function App() {
     { id: "l15", level: "15", points: "1500" },
   ];
   // entries
-  let tempo;
-  const [chosenAnswers, setChosenAnswers] = useState([]);
-
-  const [level, setLevel] = useState(1);
+  const [answers, setAnswers] = useState([]);
+  const [question, setQuestion] = useState([]);
+  const [level, setLevel] = useState(0);
   const submitingAnswer = () => {
     setLevel(level + 1);
   };
+  // Delete all four subQuestions from the localStorage
 
-  // add to the localStorage the preseneted question
+  // Add to the localStorage the presented question
   const localStorageSetQuestionAlreadyChosen = (questionComposedId) => {
     const forwardSlash = "/";
-    const entryModified = forwardSlash.concat(questionComposedId, forwardSlash);
+    const entryModified = questionComposedId + "/";
     if (localStorage.getItem("QuestionAlreadyChosen") != null) {
       localStorage.setItem(
         "QuestionAlreadyChosen",
         localStorage.getItem("QuestionAlreadyChosen") + entryModified
       );
-      console.log("here");
     } else {
       localStorage.setItem("QuestionAlreadyChosen", entryModified);
-      console.log("out");
     }
   };
-  // check which sub-questions for a single main question have already been presented and suggest one new
+  // Check whether a subQuestion for a single main question has already been presented and suggest a new one
   const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
-    let viewedQuestions = "";
+    let indexRandom;
     let i;
-    let indices = [
-      (levelEntry, "0"),
-      (levelEntry, "1"),
-      (levelEntry, "2"),
-      (levelEntry, "3"),
-    ];
+
+    const unViewedQuestionsArray = [];
     if (localStorage.getItem("QuestionAlreadyChosen") != null) {
       const questionsStored = localStorage
         .getItem("QuestionAlreadyChosen")
         .split("/");
       for (i = 0; i < 4; i += 1) {
-        for (let j = 0; j <= questionsStored.length; j += 1) {
-          if (questionsStored[j] == levelEntry + i) {
-            viewedQuestions = viewedQuestions.concat(levelEntry + i, "/");
+        let j;
+        for (j = 0; j < questionsStored.length; j += 1) {
+          if (questionsStored[j] == levelEntry + "" + i) {
             break;
           }
         }
-      }
-      const viewedQuestionsArray = viewedQuestions.split("/");
-      // eslint-disable-next-line prefer-const
-
-      for (let v = 0; v < 4; v += 1) {
-        for (let k = 0; k <= viewedQuestionsArray.length; k += 1) {
-          if (viewedQuestionsArray[k] === indices[v]) {
-            indices.splice(v, 1);
-            break;
-          }
+        if (j >= questionsStored.length) {
+          unViewedQuestionsArray.push(levelEntry + "" + i);
         }
       }
-      if (indices.length === 0) {
-        indices = [
-          levelEntry.concat("0"),
-          levelEntry.concat("1"),
-          levelEntry.concat("2"),
-          levelEntry.concat("3"),
-        ];
+      let newVal = "";
+      if (unViewedQuestionsArray.length == 0) {
+        for (let w = 0; w < 4; w += 1) {
+          newVal = localStorage
+            .getItem("QuestionAlreadyChosen")
+            .replace(levelEntry + "" + w + "/", "");
+          localStorage.setItem("QuestionAlreadyChosen", newVal);
+          indexRandom = Math.floor(Math.random() * 4);
+        }
+        localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
+      } else {
+        indexRandom = Math.floor(Math.random() * unViewedQuestionsArray.length);
+        localStorageSetQuestionAlreadyChosen(
+          unViewedQuestionsArray[indexRandom]
+        );
       }
+    } else {
+      indexRandom = Math.floor(Math.random() * 4);
+      localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
     }
-    const QuestionWhichGonnaBeShown =
-      indices[Math.floor(Math.random() * indices.length)];
-    localStorageSetQuestionAlreadyChosen(
-      levelEntry + QuestionWhichGonnaBeShown
-    );
-    tempo = questions[0][QuestionWhichGonnaBeShown].content;
+
+    setAnswers(questions[levelEntry][indexRandom].content);
+    setQuestion(questions[levelEntry][indexRandom].question);
   };
-  localStorageCheckForQuestionIfItWasAlreadyChosen(level);
+
   array = array.reverse();
   const [isPlaying, setIsPlaying] = useState(false);
   const startPlayingHandler = () => {
+    setLevel(0);
+    localStorageCheckForQuestionIfItWasAlreadyChosen(level);
     setIsPlaying(true);
   };
   return (
@@ -740,7 +736,13 @@ export function App() {
           </div>
         </div>
       )}
-      {isPlaying && <QuizPage level={array} answersFromApp={tempo} />}
+      {isPlaying && (
+        <QuizPage
+          level={array}
+          answersFromApp={answers}
+          questionFromApp={question}
+        />
+      )}
     </>
   );
 }
