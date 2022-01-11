@@ -1,12 +1,19 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable prefer-template */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./quizPage.css";
 import { Answers } from "./Answers";
 
 export const QuizPage = function ss(props) {
+  // entries
+  const [answers, setAnswers] = useState([]);
+  const [question, setQuestion] = useState(0);
+  const [answer, setAnswer] = useState(0);
+  const level = props.recentLevel;
   const renderTime = ({ remainingTime }) => {
     if (remainingTime === 0) {
       return (
@@ -83,7 +90,75 @@ export const QuizPage = function ss(props) {
       </div>
     ));
   }
+  // Add to the localStorage the current question
+  const localStorageSetQuestionAlreadyChosen = (questionComposedId) => {
+    const entryModified = questionComposedId + "/";
+    if (localStorage.getItem("QuestionAlreadyChosen") != null) {
+      localStorage.setItem(
+        "QuestionAlreadyChosen",
+        localStorage.getItem("QuestionAlreadyChosen") + entryModified
+      );
+    } else {
+      localStorage.setItem("QuestionAlreadyChosen", entryModified);
+    }
+  };
+  // Check whether a subQuestion for a single main question has already been presented and suggest a new one
+  const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
+    let indexRandom;
+    let i;
 
+    const unViewedQuestionsArray = [];
+    if (localStorage.getItem("QuestionAlreadyChosen") != null) {
+      const questionsStored = localStorage
+        .getItem("QuestionAlreadyChosen")
+        .split("/");
+      for (i = 0; i < 4; i += 1) {
+        let j;
+        for (j = 0; j < questionsStored.length; j += 1) {
+          if (questionsStored[j] == levelEntry + "" + i) {
+            break;
+          }
+        }
+        if (j >= questionsStored.length) {
+          unViewedQuestionsArray.push(levelEntry + "" + i);
+        }
+      }
+      let newVal = "";
+      if (unViewedQuestionsArray.length == 0) {
+        for (let w = 0; w < 4; w += 1) {
+          newVal = localStorage
+            .getItem("QuestionAlreadyChosen")
+            .replace(levelEntry + "" + w + "/", "");
+          localStorage.setItem("QuestionAlreadyChosen", newVal);
+          indexRandom = Math.floor(Math.random() * 4);
+        }
+        localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
+      } else {
+        indexRandom = Math.floor(Math.random() * unViewedQuestionsArray.length);
+        localStorageSetQuestionAlreadyChosen(
+          unViewedQuestionsArray[indexRandom]
+        );
+      }
+    } else {
+      indexRandom = Math.floor(Math.random() * 4);
+      localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
+    }
+
+    setAnswers(props.suggestedQuestions[indexRandom].content);
+    setQuestion(props.suggestedQuestions[indexRandom].question);
+    setAnswer(props.suggestedQuestions[indexRandom].correct);
+  };
+  console.log("ana dkhlt lquiz");
+  useEffect(() => {
+    localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
+    console.log("an dert hook");
+  }, [level]);
+  const onSubmitAnswerHandler = (submitedAnswer) => {
+    if (submitedAnswer == answer) {
+      console.log("chwiya ghanloadi next levl");
+      props.onSubmitLevel(props.recentLevel);
+    }
+  };
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row " style={{ height: "100%" }}>
@@ -143,14 +218,17 @@ export const QuizPage = function ss(props) {
                   lineHeight: "300%",
                 }}
               >
-                {props.questionFromApp}{" "}
+                {question}{" "}
               </div>
             </div>
             <div
               className="d-flex flex-column justify-content-start align-items-center flex-fill animate__animated animate__backInUp"
               style={{ width: "100%" }}
             >
-              <Answers answers={props.answersFromApp} className="" />
+              <Answers
+                answers={answers}
+                onSubmitAnswer={onSubmitAnswerHandler}
+              />
             </div>
           </div>
         </div>

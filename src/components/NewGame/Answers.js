@@ -4,13 +4,15 @@
 import React from "react";
 
 export const Answers = function ff(props) {
-  const [ans1, ans2, ans3, ans4] = props.answers;
-
+  const [ans0, ans1, ans2, ans3] = props.answers;
+  const onSubmitAnswerHandler = (e) => {
+    props.onSubmitAnswer(e.target.id);
+  };
   return (
     <>
       <div className="d-flex flex-row" style={{ width: "100%" }}>
         <button
-          id="button1"
+          id="0"
           type="button"
           className="btnAnsw"
           style={{
@@ -18,25 +20,29 @@ export const Answers = function ff(props) {
             marginRight: "1.5%",
             width: "100%",
           }}
+          value={ans0}
+          onClick={onSubmitAnswerHandler}
+        >
+          {ans0}
+        </button>
+        <button
+          id="1"
+          type="button"
+          className="btnAnsw"
+          style={{
+            marginRight: "3%",
+            marginLeft: "1.5%",
+            width: "100%",
+          }}
+          onClick={onSubmitAnswerHandler}
           value={ans1}
         >
           {ans1}
         </button>
-        <button
-          type="button"
-          className="btnAnsw"
-          style={{
-            marginRight: "3%",
-            marginLeft: "1.5%",
-            width: "100%",
-          }}
-          value={ans2}
-        >
-          {ans2}
-        </button>
       </div>
       <div className="d-flex flex-row" style={{ width: "100%" }}>
         <button
+          id="2"
           type="button"
           className="btnAnsw"
           style={{
@@ -45,11 +51,13 @@ export const Answers = function ff(props) {
             marginTop: "2%",
             width: "100%",
           }}
-          value={ans3}
+          onClick={onSubmitAnswerHandler}
+          value={ans2}
         >
-          {ans3}
+          {ans2}
         </button>
         <button
+          id="3"
           type="button"
           className="btnAnsw"
           style={{
@@ -58,9 +66,10 @@ export const Answers = function ff(props) {
             marginTop: "2%",
             width: "100%",
           }}
-          value={ans4}
+          onClick={onSubmitAnswerHandler}
+          value={ans3}
         >
-          {ans4}
+          {ans3}
         </button>
       </div>
     </>

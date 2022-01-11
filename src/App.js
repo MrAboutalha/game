@@ -8,15 +8,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css/animate.min.css";
 
 export function App() {
+  console.log("ana dkhlt lapp");
+
+  //  Object 'questions' holds all questions
   const questions = [
     [
       {
         question: "الدولة الأفريقية الوحيدة التي لم تستعمر هي",
         content: ["ليبيريا", "إريتريا", "أنغولا", "بنين"],
-        correct: 1,
+        correct: 0,
       },
       {
-        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ه",
+        question: "الهيتومتر هو قياس كمية الأمطار والأنيمومتر ",
         content: [
           "جهاز قياس سرعة الرياح",
           "جهاز التوتر",
@@ -60,7 +63,7 @@ export function App() {
       {
         question: "كم عدد الساعات في اليوم الواحد",
         content: ["22", "23", "12", "24"],
-        correct: 4,
+        correct: 3,
       },
     ],
     [
@@ -87,7 +90,7 @@ export function App() {
       {
         question: "كم عدد الساعات في اليوم الواحد",
         content: ["22", "23", "12", "24"],
-        correct: 4,
+        correct: 3,
       },
     ],
     [
@@ -415,6 +418,7 @@ export function App() {
       },
     ],
   ];
+  //  object 'array' holds all levels and points
   let array = [
     { id: "l1", level: "1", points: "100" },
     { id: "l2", level: "2", points: "200" },
@@ -432,81 +436,22 @@ export function App() {
     { id: "l14", level: "14", points: "1400" },
     { id: "l15", level: "15", points: "1500" },
   ];
-  // entries
-  const [answers, setAnswers] = useState([]);
-  const [question, setQuestion] = useState([]);
-  const [level, setLevel] = useState(0);
-  const submitingAnswer = () => {
-    setLevel(level + 1);
-  };
-  // Delete all four subQuestions from the localStorage
-
-  // Add to the localStorage the presented question
-  const localStorageSetQuestionAlreadyChosen = (questionComposedId) => {
-    const forwardSlash = "/";
-    const entryModified = questionComposedId + "/";
-    if (localStorage.getItem("QuestionAlreadyChosen") != null) {
-      localStorage.setItem(
-        "QuestionAlreadyChosen",
-        localStorage.getItem("QuestionAlreadyChosen") + entryModified
-      );
-    } else {
-      localStorage.setItem("QuestionAlreadyChosen", entryModified);
-    }
-  };
-  // Check whether a subQuestion for a single main question has already been presented and suggest a new one
-  const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
-    let indexRandom;
-    let i;
-
-    const unViewedQuestionsArray = [];
-    if (localStorage.getItem("QuestionAlreadyChosen") != null) {
-      const questionsStored = localStorage
-        .getItem("QuestionAlreadyChosen")
-        .split("/");
-      for (i = 0; i < 4; i += 1) {
-        let j;
-        for (j = 0; j < questionsStored.length; j += 1) {
-          if (questionsStored[j] == levelEntry + "" + i) {
-            break;
-          }
-        }
-        if (j >= questionsStored.length) {
-          unViewedQuestionsArray.push(levelEntry + "" + i);
-        }
-      }
-      let newVal = "";
-      if (unViewedQuestionsArray.length == 0) {
-        for (let w = 0; w < 4; w += 1) {
-          newVal = localStorage
-            .getItem("QuestionAlreadyChosen")
-            .replace(levelEntry + "" + w + "/", "");
-          localStorage.setItem("QuestionAlreadyChosen", newVal);
-          indexRandom = Math.floor(Math.random() * 4);
-        }
-        localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
-      } else {
-        indexRandom = Math.floor(Math.random() * unViewedQuestionsArray.length);
-        localStorageSetQuestionAlreadyChosen(
-          unViewedQuestionsArray[indexRandom]
-        );
-      }
-    } else {
-      indexRandom = Math.floor(Math.random() * 4);
-      localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
-    }
-
-    setAnswers(questions[levelEntry][indexRandom].content);
-    setQuestion(questions[levelEntry][indexRandom].question);
-  };
-
   array = array.reverse();
+
+  // variables
+  const [level, setLevel] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  // function to start the game
   const startPlayingHandler = () => {
-    setLevel(0);
-    localStorageCheckForQuestionIfItWasAlreadyChosen(level);
     setIsPlaying(true);
   };
+
+  //  function to move up to the next level
+  const onSubmitLevelhandler = (previousLevel) => {
+    setLevel(() => previousLevel + 1);
+  };
+
   return (
     <>
       {!isPlaying && (
@@ -738,9 +683,10 @@ export function App() {
       )}
       {isPlaying && (
         <QuizPage
+          recentLevel={level}
+          suggestedQuestions={questions[level]}
           level={array}
-          answersFromApp={answers}
-          questionFromApp={question}
+          onSubmitLevel={onSubmitLevelhandler}
         />
       )}
     </>
