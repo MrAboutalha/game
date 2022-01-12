@@ -139,14 +139,24 @@ export const QuizPage = function ss(props) {
       document.getElementById("1").style.backgroundColor = "";
       document.getElementById("2").style.backgroundColor = "";
       document.getElementById("3").style.backgroundColor = "";
+      document.getElementById("0").disabled = false;
+      document.getElementById("1").disabled = false;
+      document.getElementById("2").disabled = false;
+      document.getElementById("3").disabled = false;
+      setKey((prevKey) => prevKey + 1);
     } else {
       setIsWrong(true);
       setHelpCrowd(false);
       setHelpFifty(false);
+      setKey((prevKey) => prevKey + 1);
       document.getElementById("0").style.backgroundColor = "";
       document.getElementById("1").style.backgroundColor = "";
       document.getElementById("2").style.backgroundColor = "";
       document.getElementById("3").style.backgroundColor = "";
+      document.getElementById("0").disabled = false;
+      document.getElementById("1").disabled = false;
+      document.getElementById("2").disabled = false;
+      document.getElementById("3").disabled = false;
     }
   };
 
@@ -156,10 +166,6 @@ export const QuizPage = function ss(props) {
     setHelpCrowd(false);
     setHelpFifty(false);
     props.onSubmitLevel(-1);
-    document.getElementById("0").style.backgroundColor = "";
-    document.getElementById("1").style.backgroundColor = "";
-    document.getElementById("2").style.backgroundColor = "";
-    document.getElementById("3").style.backgroundColor = "";
   };
   const goCrowdHandler = () => {
     setHelpCrowd(true);

@@ -44,8 +44,11 @@ export const Answers = function ff(props) {
     const first = filteredAry[Math.floor(Math.random() * filteredAry.length)];
     filteredAry = filteredAry.filter((e) => e != first);
     const second = filteredAry[Math.floor(Math.random() * filteredAry.length)];
-    document.getElementById(second).style.backgroundColor = "#AA0000";
-    document.getElementById(first).style.backgroundColor = "#AA0000";
+    document.getElementById(second).style.backgroundColor = "gray";
+    document.getElementById(second).disabled = true;
+
+    document.getElementById(first).style.backgroundColor = "gray";
+    document.getElementById(first).disabled = true;
   }
   return (
     <>
