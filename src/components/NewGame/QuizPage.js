@@ -81,7 +81,6 @@ export const QuizPage = function ss(props) {
   };
   // Check whether a subQuestion for a single main question has already been presented and suggest a new one
   const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
-    console.log("i have checked for the main question", levelEntry);
     let indexRandom;
     let i;
 

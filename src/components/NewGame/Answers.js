@@ -40,7 +40,6 @@ export const Answers = function ff(props) {
   if (props.helpFifty == true) {
     const indices = ["0", "1", "2", "3"];
     let filteredAry = indices.filter((e) => e != props.correctAnswr);
-    console.log("FILTRED", filteredAry);
     const first = filteredAry[Math.floor(Math.random() * filteredAry.length)];
     filteredAry = filteredAry.filter((e) => e != first);
     const second = filteredAry[Math.floor(Math.random() * filteredAry.length)];
