@@ -13,8 +13,11 @@ import Levelpoints from "./Levelpoints";
 export const QuizPage = function ss(props) {
   // entries
   const [answers, setAnswers] = useState([]);
+  const [helpCrowd, setHelpCrowd] = useState(false);
+  const [helpFifty, setHelpFifty] = useState(false);
   const [question, setQuestion] = useState(0);
   const [answer, setAnswer] = useState(0);
+  const [key, setKey] = useState(0);
   const level = props.recentLevel;
   const renderTime = ({ remainingTime }) => {
     if (remainingTime === 0) {
@@ -118,8 +121,6 @@ export const QuizPage = function ss(props) {
       indexRandom = Math.floor(Math.random() * 4);
       localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
     }
-    console.log("i found the free", indexRandom);
-
     setAnswers(props.suggestedQuestions[indexRandom].content);
     setQuestion(props.suggestedQuestions[indexRandom].question);
     setAnswer(props.suggestedQuestions[indexRandom].correct);
@@ -131,15 +132,44 @@ export const QuizPage = function ss(props) {
   }, [level]);
   const onSubmitAnswerHandler = (submitedAnswer) => {
     if (submitedAnswer == answer) {
+      setHelpCrowd(false);
+      setHelpFifty(false);
       props.onSubmitLevel(props.recentLevel);
+      document.getElementById("0").style.backgroundColor = "";
+      document.getElementById("1").style.backgroundColor = "";
+      document.getElementById("2").style.backgroundColor = "";
+      document.getElementById("3").style.backgroundColor = "";
     } else {
       setIsWrong(true);
+      setHelpCrowd(false);
+      setHelpFifty(false);
+      document.getElementById("0").style.backgroundColor = "";
+      document.getElementById("1").style.backgroundColor = "";
+      document.getElementById("2").style.backgroundColor = "";
+      document.getElementById("3").style.backgroundColor = "";
     }
   };
+
   const onResetHandler = () => {
     setIsWrong(false);
+    setKey((prevKey) => prevKey + 1);
+    setHelpCrowd(false);
+    setHelpFifty(false);
     props.onSubmitLevel(-1);
+    document.getElementById("0").style.backgroundColor = "";
+    document.getElementById("1").style.backgroundColor = "";
+    document.getElementById("2").style.backgroundColor = "";
+    document.getElementById("3").style.backgroundColor = "";
   };
+  const goCrowdHandler = () => {
+    setHelpCrowd(true);
+    document.getElementById("crowd").disabled = true;
+  };
+  const goFiftyHandler = () => {
+    setHelpFifty(true);
+    document.getElementById("fifty").disabled = true;
+  };
+
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row " style={{ height: "100%" }}>
@@ -229,6 +259,9 @@ export const QuizPage = function ss(props) {
                 <Answers
                   answers={answers}
                   onSubmitAnswer={onSubmitAnswerHandler}
+                  helpCrowd={helpCrowd}
+                  helpFifty={helpFifty}
+                  correctAnswr={answer}
                 />
               )}
               {isWrong && (
@@ -261,56 +294,63 @@ export const QuizPage = function ss(props) {
             </div>
           </div>
         </div>
-        <div className="col-2">
-          {" "}
-          <div
-            className="d-flex flex-column justify-content-center align-items-items"
-            style={{ height: "100%" }}
-          >
+        {!isWrong && (
+          <div className="col-2">
+            {" "}
             <div
-              className="d-flex flex-column justify-content-center align-items-center animate__animated animate__slideInRight"
-              style={{ height: "50%" }}
+              className="d-flex flex-column justify-content-center align-items-items"
+              style={{ height: "100%" }}
             >
-              <CountdownCircleTimer
-                size="100"
-                strokeWidth="8"
-                isPlaying
-                duration={60}
-                colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
-                onComplete={() => [true, 1000]}
+              <div
+                className="d-flex flex-column justify-content-center align-items-center animate__animated animate__slideInRight"
+                style={{ height: "50%" }}
               >
-                {renderTime}
-              </CountdownCircleTimer>
-            </div>
-            <div
-              className="d-flex flex-column  justify-content-center align-items-items"
-              style={{ height: "50%" }}
-            >
-              <button
-                type="button"
-                className="btn a btn-warning animate__animated animate__slideInRight btn-circle btn-md"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  marginBottom: "10%",
-                }}
+                <CountdownCircleTimer
+                  key={key}
+                  size="100"
+                  strokeWidth="8"
+                  isPlaying
+                  duration={60}
+                  colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
+                  onComplete={() => setIsWrong(true)}
+                >
+                  {renderTime}
+                </CountdownCircleTimer>
+              </div>
+              <div
+                className="d-flex flex-column  justify-content-center align-items-items"
+                style={{ height: "50%" }}
               >
-                <img src="/Assets/crowd.png" alt="crowd " width="60%" />
-              </button>
-              <button
-                type="button"
-                className="btn btn-warning animate__animated animate__slideInRight btn-circle btn-md"
-                style={{
-                  color: "#540e66",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                }}
-              >
-                50:50
-              </button>
+                <button
+                  type="button"
+                  className="btn a btn-warning animate__animated animate__slideInRight btn-circle btn-md"
+                  id="crowd"
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginBottom: "10%",
+                  }}
+                  onClick={goCrowdHandler}
+                >
+                  <img src="/Assets/crowd.png" alt="crowd " width="60%" />
+                </button>
+                <button
+                  id="fifty"
+                  type="button"
+                  className="btn btn-warning animate__animated animate__slideInRight btn-circle btn-md"
+                  style={{
+                    color: "#540e66",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                  onClick={goFiftyHandler}
+                >
+                  50:50
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

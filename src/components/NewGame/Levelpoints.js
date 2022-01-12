@@ -12,7 +12,7 @@ const Levelpoints = (props) => {
   let font = "white";
 
   if (props.level - 1 == props.recentLevelToLevelpoints) {
-    back = "yellow";
+    back = "#ffc107";
     font = "black";
   }
 
