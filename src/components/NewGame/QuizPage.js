@@ -3,10 +3,12 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
+import { BsArrowRepeat } from "react-icons/bs";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./quizPage.css";
 import { Answers } from "./Answers";
+import Levelpoints from "./Levelpoints";
 
 export const QuizPage = function ss(props) {
   // entries
@@ -54,40 +56,12 @@ export const QuizPage = function ss(props) {
   let levelList = <h3>NAN</h3>;
   if (props.level.length > 0) {
     levelList = props.level.map((x) => (
-      <div className="flex-fill d-flex flex-row">
-        <div
-          key={x.level}
-          style={{
-            fontFamily: "var(--font-family-Graphik)",
-
-            width: "10%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "#50bb6b",
-            color: "white",
-            fontWeight: "bolder",
-            height: "100%",
-          }}
-        >
-          {x.level}
-        </div>
-        &nbsp; &nbsp;
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "white",
-            fontWeight: "bolder",
-            fontFamily: "var(--font-family-Graphik)",
-          }}
-        >
-          {" "}
-          {x.points}
-          <sup>pts</sup>
-        </div>
-      </div>
+      <Levelpoints
+        key={x.id}
+        level={x.level}
+        points={x.points}
+        recentLevelToLevelpoints={props.recentLevel}
+      />
     ));
   }
   // Add to the localStorage the current question
@@ -104,6 +78,7 @@ export const QuizPage = function ss(props) {
   };
   // Check whether a subQuestion for a single main question has already been presented and suggest a new one
   const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
+    console.log("i have checked for the main question", levelEntry);
     let indexRandom;
     let i;
 
@@ -143,21 +118,27 @@ export const QuizPage = function ss(props) {
       indexRandom = Math.floor(Math.random() * 4);
       localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
     }
+    console.log("i found the free", indexRandom);
 
     setAnswers(props.suggestedQuestions[indexRandom].content);
     setQuestion(props.suggestedQuestions[indexRandom].question);
     setAnswer(props.suggestedQuestions[indexRandom].correct);
   };
-  console.log("ana dkhlt lquiz");
+  const [isWrong, setIsWrong] = useState(false);
+
   useEffect(() => {
     localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
-    console.log("an dert hook");
   }, [level]);
   const onSubmitAnswerHandler = (submitedAnswer) => {
     if (submitedAnswer == answer) {
-      console.log("chwiya ghanloadi next levl");
       props.onSubmitLevel(props.recentLevel);
+    } else {
+      setIsWrong(true);
     }
+  };
+  const onResetHandler = () => {
+    setIsWrong(false);
+    props.onSubmitLevel(-1);
   };
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
@@ -205,30 +186,78 @@ export const QuizPage = function ss(props) {
                 textAlign: "center",
               }}
             >
-              <div
-                className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
-                style={{
-                  width: "100%",
-                  height: "50%",
-                  background: "#16ad85",
-                  borderRadius: "19px",
-                  color: "white",
-                  fontFamily: " var(--font-family-GESSTwoBold)",
-                  borderColor: "white",
-                  lineHeight: "300%",
-                }}
-              >
-                {question}{" "}
-              </div>
+              {!isWrong && (
+                <div
+                  className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
+                  style={{
+                    width: "100%",
+                    height: "50%",
+                    background: "#16ad85",
+                    borderRadius: "19px",
+                    color: "white",
+                    fontFamily: " var(--font-family-GESSTwoBold)",
+                    borderColor: "white",
+                    lineHeight: "300%",
+                  }}
+                >
+                  {question}{" "}
+                </div>
+              )}
+              {isWrong && (
+                <div
+                  className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
+                  style={{
+                    width: "100%",
+                    height: "50%",
+                    background: "#16ad85",
+                    borderRadius: "19px",
+                    color: "white",
+                    fontFamily: " var(--font-family-GESSTwoBold)",
+                    borderColor: "white",
+                    lineHeight: "300%",
+                  }}
+                >
+                  انتهت اللعبة
+                </div>
+              )}
             </div>
             <div
               className="d-flex flex-column justify-content-start align-items-center flex-fill animate__animated animate__backInUp"
               style={{ width: "100%" }}
             >
-              <Answers
-                answers={answers}
-                onSubmitAnswer={onSubmitAnswerHandler}
-              />
+              {!isWrong && (
+                <Answers
+                  answers={answers}
+                  onSubmitAnswer={onSubmitAnswerHandler}
+                />
+              )}
+              {isWrong && (
+                <div
+                  className="d-flex flex-row align-items-center justify-content-center"
+                  style={{ width: "100%" }}
+                >
+                  <button
+                    className="retryButton d-flex align-items-center justify-content-center "
+                    style={{
+                      marginLeft: "3%",
+                      marginRight: "1.5%",
+                      width: "15%",
+                      paddingBottom: "2%",
+                      paddingTop: "2%",
+                      alignItems: "center",
+                      color: "#16ad85",
+                      fontSize: "2em",
+                      borderRadius: "7px",
+                      background: "#fde31d",
+                      border: "solid #16ad85 5px",
+                    }}
+                    type="button"
+                    onClick={onResetHandler}
+                  >
+                    <BsArrowRepeat />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
