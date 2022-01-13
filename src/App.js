@@ -757,7 +757,6 @@ export function App() {
     setLevel(() => previousLevel + 1);
   };
   const onResetHandler = (previousLevel) => {
-    console.log("dsfd");
     setKey((value) => value + 1);
     setLevel(() => 0);
   };
