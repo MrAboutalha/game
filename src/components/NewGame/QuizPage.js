@@ -19,6 +19,7 @@ export const QuizPage = function ss(props) {
   const [answer, setAnswer] = useState(0);
   const [key, setKey] = useState(0);
   const level = props.recentLevel;
+
   const renderTime = ({ remainingTime }) => {
     if (remainingTime === 0) {
       return (
@@ -129,6 +130,7 @@ export const QuizPage = function ss(props) {
   useEffect(() => {
     localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
   }, [level]);
+
   const onSubmitAnswerHandler = (submitedAnswer) => {
     if (submitedAnswer == answer) {
       setHelpCrowd(false);
@@ -164,7 +166,7 @@ export const QuizPage = function ss(props) {
     setKey((prevKey) => prevKey + 1);
     setHelpCrowd(false);
     setHelpFifty(false);
-    props.onSubmitLevel(-1);
+    props.onReset(-1);
   };
   const goCrowdHandler = () => {
     setHelpCrowd(true);
@@ -226,13 +228,11 @@ export const QuizPage = function ss(props) {
                   className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
                   style={{
                     width: "100%",
-                    height: "50%",
                     background: "#16ad85",
                     borderRadius: "19px",
                     color: "white",
                     fontFamily: " var(--font-family-GESSTwoBold)",
                     borderColor: "white",
-                    lineHeight: "300%",
                   }}
                 >
                   {question}{" "}
