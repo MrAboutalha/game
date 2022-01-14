@@ -768,9 +768,9 @@ export function App() {
           className="d-flex justify-content-center align-items-center"
           style={{ height: "100%" }}
         >
-          <audio autoPlay loop src="assets/mainSoundTrack__start.mp3">
-            Your browser does not support the
-            <code>audio</code> element.
+          <audio autoPlay loop>
+            <source src="assets/mainSoundTrack__start.mp3" type="audio/mp3" />
+            Your browser does not support the audio element.
           </audio>
           <div className="container-fluid">
             <div className="row">
