@@ -12,8 +12,10 @@ export const Answer = (props) => {
     props.onSubmitAnswer(e.target.id);
   };
   let back = "";
-  if (props.help == true && props.identifier == props.correct)
+  if (props.help == true && props.identifier == props.correct) {
+    console.log("this is");
     back = "rgb(255, 193, 7)";
+  }
 
   return (
     <button

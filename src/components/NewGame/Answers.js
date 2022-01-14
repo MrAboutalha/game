@@ -33,7 +33,7 @@ export const Answers = function ff(props) {
       answer={x.value}
       correct={props.correctAnswr}
       onSubmitAnswer={onSubmitAnswerHandler}
-      help={props.help}
+      help={props.helpCrowd}
     />
   ));
 
