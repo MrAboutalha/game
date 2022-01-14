@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable prefer-template */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
@@ -767,6 +768,10 @@ export function App() {
           className="d-flex justify-content-center align-items-center"
           style={{ height: "100%" }}
         >
+          <audio autoPlay loop src="assets/mainSoundTrack__start.mp3">
+            Your browser does not support the
+            <code>audio</code> element.
+          </audio>
           <div className="container-fluid">
             <div className="row">
               <div className="col-1  col-sm-1 col-md-1 nopadding col-lg-1 d-flex justify-content-start">
