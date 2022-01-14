@@ -8,7 +8,7 @@
   padding: 8px 30px 8px 30px;
   border: solid #16ad85 3px;
   font-family: var(--font-family-GESSTwoBold);
-  filter: drop-Shadow(0px 0px 40px rgb(238, 255, 0));
+  filter: drop-Shadow(0px 0px 10px rgb(238, 255, 0));
 }
 
 .btnAnsw:hover {
