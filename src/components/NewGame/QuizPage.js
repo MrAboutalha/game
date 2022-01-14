@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable eqeqeq */
 /* eslint-disable prefer-template */
 /* eslint-disable react/destructuring-assignment */
@@ -207,7 +208,7 @@ export const QuizPage = function ss(props) {
             <div
               className="d-flex "
               style={{
-                backgroundImage: "url(/Assets/back3.png)",
+                backgroundImage: "url(assets/back3.png)",
                 backgroundSize: "cover",
 
                 width: "100%",
@@ -337,7 +338,7 @@ export const QuizPage = function ss(props) {
                   }}
                   onClick={goCrowdHandler}
                 >
-                  <img src="/Assets/crowd.png" alt="crowd " width="60%" />
+                  <img src="assets/crowd.png" alt="crowd " width="60%" />
                 </button>
                 <button
                   id="fifty"

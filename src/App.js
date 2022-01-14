@@ -774,7 +774,7 @@ export function App() {
                   {" "}
                   <div className="row mb-auto  nopadding">
                     <img
-                      src="/Assets/coinDown.png"
+                      src="assets/coinDown.png"
                       style={{
                         position: "relative",
                         left: "100%",
@@ -785,7 +785,7 @@ export function App() {
                       alt="coinSideLeftUp"
                     />{" "}
                     <img
-                      src="/Assets/glow.png"
+                      src="assets/glow.png"
                       className="animate__animated animate__pulse animate__infinite"
                       style={{
                         position: "relative",
@@ -799,7 +799,7 @@ export function App() {
                   </div>
                   <div className="row nopadding">
                     <img
-                      src="/Assets/glow.png"
+                      src="assets/glow.png"
                       className="animate__animated animate__pulse animate__infinite"
                       style={{
                         position: "relative",
@@ -810,7 +810,7 @@ export function App() {
                       alt="coinSideLeftUp"
                     />
                     <img
-                      src="/Assets/coin11.png"
+                      src="assets/coin11.png"
                       style={{
                         width: "70%",
                         position: "relative",
@@ -825,7 +825,7 @@ export function App() {
               </div>
               <div className="col-2 col-sm-2 col-md-2 nopadding col-lg-2 d-flex justify-content-end">
                 <img
-                  src="/Assets/glow.png"
+                  src="assets/glow.png"
                   className="animate__animated animate__pulse animate__infinite speedRalenti"
                   style={{
                     position: "relative",
@@ -838,7 +838,7 @@ export function App() {
                   alt="coinSideLeftUp"
                 />
                 <img
-                  src="/Assets/leftSide.png"
+                  src="assets/leftSide.png"
                   className="animate__animated animate__pulse animate__infinite  speedRalenti"
                   style={{
                     position: "relative",
@@ -852,7 +852,7 @@ export function App() {
               </div>
               <div className="col-6 col-sm-6 col-md-6 nopadding col-sm-4 col-lg-6 d-flex justify-content-center">
                 <img
-                  src="/Assets/shine.png"
+                  src="assets/shine.png"
                   className="animate__animated animate__rotateIn animate__infinite "
                   style={{
                     width: "15%",
@@ -867,7 +867,7 @@ export function App() {
                   "
                 />{" "}
                 <img
-                  src="/Assets/glow-bg.png"
+                  src="assets/glow-bg.png"
                   className="animate__animated animate__fadeIn"
                   style={{
                     position: "relative",
@@ -878,7 +878,7 @@ export function App() {
                   alt="coinSideLeftUp"
                 />
                 <img
-                  src="/Assets/logo1.png"
+                  src="assets/logo1.png"
                   className="animate__animated animate__flip"
                   style={{
                     width: "70%",
@@ -892,7 +892,7 @@ export function App() {
               </div>
               <div className="col-2  col-sm-2 col-md-2 nopadding col-lg-2 d-flex justify-content-start">
                 <img
-                  src="/Assets/glow.png"
+                  src="assets/glow.png"
                   className="animate__animated animate__pulse animate__infinite speedRalenti"
                   style={{
                     position: "relative",
@@ -905,7 +905,7 @@ export function App() {
                   alt="coinSideLeftUp"
                 />
                 <img
-                  src="/Assets/rightSide.png"
+                  src="assets/rightSide.png"
                   className="animate__animated animate__pulse animate__infinite speedRalenti"
                   style={{
                     position: "relative",
@@ -922,7 +922,7 @@ export function App() {
                   {" "}
                   <div className="row mb-auto  nopadding">
                     <img
-                      src="/Assets/glow.png"
+                      src="assets/glow.png"
                       className="animate__animated animate__pulse animate__infinite speedRalenti"
                       style={{
                         position: "relative",
@@ -936,7 +936,7 @@ export function App() {
                     />
                     <img
                       className="animate__animated animate__pulse animate__infinite speedRalenti"
-                      src="/Assets/coin11.png"
+                      src="assets/coin11.png"
                       style={{
                         width: "70%",
                         position: "relative",
@@ -948,7 +948,7 @@ export function App() {
                   </div>
                   <div className="row nopadding">
                     <img
-                      src="/Assets/glow.png"
+                      src="assets/glow.png"
                       className="animate__animated animate__pulse animate__infinite speedRalenti"
                       style={{
                         position: "relative",
@@ -961,7 +961,7 @@ export function App() {
                     />
                     <img
                       className="animate__animated animate__pulse animate__infinite speedRalenti"
-                      src="/Assets/coin11.png"
+                      src="assets/coin11.png"
                       style={{
                         top: "-24%",
                         position: "relative",
