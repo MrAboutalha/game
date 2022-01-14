@@ -1,10 +1,10 @@
 @font-face {
   font-family: "master";
-  src: url(/public/Assets/GESS2.woff2) format("woff2");
+  src: url(./assets/GESS2.woff2) format("woff2");
 }
 @font-face {
   font-family: "master2";
-  src: url(/public/Assets/Graphik.woff2) format("woff2");
+  src: url(./assets/Graphik.woff2) format("woff2");
 }
 :root {
   --font-family-GESSTwoBold: "master";
