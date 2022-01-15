@@ -1,12 +1,13 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable prefer-template */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { QuizPage } from "./components/NewGame/QuizPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css/animate.min.css";
+import { QuizPage } from "./components/NewGame/QuizPage";
 
 export function App() {
   //  Object 'questions' holds all questions
@@ -768,10 +769,6 @@ export function App() {
           className="d-flex justify-content-center align-items-center"
           style={{ height: "100%" }}
         >
-          <audio autoPlay loop>
-            <source src="assets/mainSoundTrack__start.mp3" type="audio/mp3" />
-            Your browser does not support the audio element.
-          </audio>
           <div className="container-fluid">
             <div className="row">
               <div className="col-1  col-sm-1 col-md-1 nopadding col-lg-1 d-flex justify-content-start">

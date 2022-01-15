@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* eslint-disable eqeqeq */
 /* eslint-disable prefer-template */
@@ -7,11 +8,19 @@ import React, { useState, useEffect } from "react";
 import { BsArrowRepeat } from "react-icons/bs";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import "bootstrap/dist/css/bootstrap.min.css";
+import correctAnswer from "../../assets/correctAnswer1.mp3";
+import wrongAnswer from "../../assets/wrongAnswer.mp3";
+import suspense from "../../assets/backGround.mp3";
 import "./quizPage.css";
 import { Answers } from "./Answers";
 import Levelpoints from "./Levelpoints";
 
 export const QuizPage = function ss(props) {
+  const [suspenseSoundVar, setSuspenseSoundVar] = useState(new Audio(suspense));
+  const [correctAnswerVar, setCorrectAnswerVar] = useState(
+    new Audio(correctAnswer)
+  );
+  const [wrongAnswerVar, setWrongAnswerVar] = useState(new Audio(wrongAnswer));
   // entries
   const [answers, setAnswers] = useState([]);
   const [helpCrowd, setHelpCrowd] = useState(false);
@@ -45,15 +54,6 @@ export const QuizPage = function ss(props) {
           }}
         >
           {remainingTime}
-        </div>
-        <div
-          style={{
-            color: "white",
-            fontWeight: "lighter",
-            fontFamily: "var(--font-family-GESSTwoBold)",
-          }}
-        >
-          seconds
         </div>
       </div>
     );
@@ -127,13 +127,23 @@ export const QuizPage = function ss(props) {
     setAnswer(props.suggestedQuestions[indexRandom].correct);
   };
   const [isWrong, setIsWrong] = useState(false);
-
+  function isPlaying(audelem) {
+    return !audelem.paused;
+  }
   useEffect(() => {
     localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
+
+    if (!isPlaying(correctAnswerVar) && !isPlaying(wrongAnswerVar)) {
+      suspenseSoundVar.play();
+    } else {
+      suspenseSoundVar.pause();
+    }
   }, [level]);
 
   const onSubmitAnswerHandler = (submitedAnswer) => {
     if (submitedAnswer == answer) {
+      correctAnswerVar.currentTime = 0;
+      correctAnswerVar.play();
       setHelpCrowd(false);
       setHelpFifty(false);
       props.onSubmitLevel(props.recentLevel);
@@ -147,6 +157,8 @@ export const QuizPage = function ss(props) {
       document.getElementById("3").disabled = false;
       setKey((prevKey) => prevKey + 1);
     } else {
+      wrongAnswerVar.play();
+      suspenseSoundVar.pause();
       setIsWrong(true);
       setHelpCrowd(false);
       setHelpFifty(false);
@@ -177,7 +189,10 @@ export const QuizPage = function ss(props) {
     setHelpFifty(true);
     document.getElementById("fifty").disabled = true;
   };
-
+  const timeout = () => {
+    setIsWrong(true);
+    wrongAnswerVar.play();
+  };
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row " style={{ height: "100%" }}>
@@ -318,7 +333,7 @@ export const QuizPage = function ss(props) {
                   isPlaying
                   duration={60}
                   colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
-                  onComplete={() => setIsWrong(true)}
+                  onComplete={timeout}
                 >
                   {renderTime}
                 </CountdownCircleTimer>
