@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable prefer-template */
@@ -762,6 +763,7 @@ export function App() {
     setKey((value) => value + 1);
     setLevel(() => 0);
   };
+
   return (
     <>
       {!isPlaying && (

@@ -16,11 +16,24 @@ import { Answers } from "./Answers";
 import Levelpoints from "./Levelpoints";
 
 export const QuizPage = function ss(props) {
+  // _______________________________________ SoundsEffects
+
+  // _____HeartBeat Sound
   const [suspenseSoundVar, setSuspenseSoundVar] = useState(new Audio(suspense));
+  // _____HeartBeat Sound
+
+  // _____CorrectAnswer Sound
   const [correctAnswerVar, setCorrectAnswerVar] = useState(
     new Audio(correctAnswer)
   );
+  // _____CorrectAnswer Sound
+
+  // _____WrongAnswer Sound
   const [wrongAnswerVar, setWrongAnswerVar] = useState(new Audio(wrongAnswer));
+  // _____WrongAnswer Sound
+
+  // _______________________________________ SoundsEffects
+
   // entries
   const [answers, setAnswers] = useState([]);
   const [helpCrowd, setHelpCrowd] = useState(false);
@@ -28,8 +41,10 @@ export const QuizPage = function ss(props) {
   const [question, setQuestion] = useState(0);
   const [answer, setAnswer] = useState(0);
   const [key, setKey] = useState(0);
+  const [isWrong, setIsWrong] = useState(false);
   const level = props.recentLevel;
-
+  let indexRandom;
+  // START__Timer
   const renderTime = ({ remainingTime }) => {
     if (remainingTime === 0) {
       return (
@@ -58,6 +73,9 @@ export const QuizPage = function ss(props) {
       </div>
     );
   };
+  // END__Timer
+
+  //  START__Levels
   let levelList = <h3>NAN</h3>;
   if (props.level.length > 0) {
     levelList = props.level.map((x) => (
@@ -69,7 +87,9 @@ export const QuizPage = function ss(props) {
       />
     ));
   }
-  // Add to the localStorage the current question
+  // END__Levels
+
+  // START__Function to add to the localStorage the current question
   const localStorageSetQuestionAlreadyChosen = (questionComposedId) => {
     const entryModified = questionComposedId + "/";
     if (localStorage.getItem("QuestionAlreadyChosen") != null) {
@@ -81,9 +101,10 @@ export const QuizPage = function ss(props) {
       localStorage.setItem("QuestionAlreadyChosen", entryModified);
     }
   };
-  // Check whether a subQuestion for a single main question has already been presented and suggest a new one
+  // END__Function to add to the localStorage the current question
+
+  // START__Function to check whether a subQuestion for a single main question has already been presented and suggest a new one
   const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
-    let indexRandom;
     let i;
 
     const unViewedQuestionsArray = [];
@@ -112,36 +133,63 @@ export const QuizPage = function ss(props) {
           indexRandom = Math.floor(Math.random() * 4);
         }
         localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
+        setAnswers(props.suggestedQuestions[indexRandom].content);
+        setQuestion(props.suggestedQuestions[indexRandom].question);
+        setAnswer(props.suggestedQuestions[indexRandom].correct);
       } else {
         indexRandom = Math.floor(Math.random() * unViewedQuestionsArray.length);
         localStorageSetQuestionAlreadyChosen(
           unViewedQuestionsArray[indexRandom]
         );
+        setAnswers(
+          props.suggestedQuestions[
+            parseInt(unViewedQuestionsArray[indexRandom], 10) % 10
+          ].content
+        );
+        setQuestion(
+          props.suggestedQuestions[
+            parseInt(unViewedQuestionsArray[indexRandom] % 10, 10)
+          ].question
+        );
+        setAnswer(
+          props.suggestedQuestions[
+            parseInt(unViewedQuestionsArray[indexRandom] % 10, 10)
+          ].correct
+        );
       }
     } else {
       indexRandom = Math.floor(Math.random() * 4);
       localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
+      setAnswers(props.suggestedQuestions[indexRandom].content);
+      setQuestion(props.suggestedQuestions[indexRandom].question);
+      setAnswer(props.suggestedQuestions[indexRandom].correct);
     }
-    setAnswers(props.suggestedQuestions[indexRandom].content);
-    setQuestion(props.suggestedQuestions[indexRandom].question);
-    setAnswer(props.suggestedQuestions[indexRandom].correct);
   };
-  const [isWrong, setIsWrong] = useState(false);
+  // END__Function to check whether a subQuestion for a single main question has already been presented and suggest a new one
+
+  // START__Function to check whether a specific track is playing
   function isPlaying(audelem) {
     return !audelem.paused;
   }
-  useEffect(() => {
-    localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
+  // END__Function to check whether a specific track is playing
 
+  // START__Hook to pause the heartbeat soundEffect
+  useEffect(() => {
     if (!isPlaying(correctAnswerVar) && !isPlaying(wrongAnswerVar)) {
       suspenseSoundVar.play();
     } else {
       suspenseSoundVar.pause();
     }
+  }, [key, level]);
+  // END__Hook to pause the heartbeat soundEffect
+
+  useEffect(() => {
+    localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
   }, [level]);
 
   const onSubmitAnswerHandler = (submitedAnswer) => {
     if (submitedAnswer == answer) {
+      setIsWrong(false);
       correctAnswerVar.currentTime = 0;
       correctAnswerVar.play();
       setHelpCrowd(false);
@@ -158,11 +206,12 @@ export const QuizPage = function ss(props) {
       setKey((prevKey) => prevKey + 1);
     } else {
       wrongAnswerVar.play();
-      suspenseSoundVar.pause();
+
       setIsWrong(true);
       setHelpCrowd(false);
       setHelpFifty(false);
       setKey((prevKey) => prevKey + 1);
+      correctAnswerVar.volume = 0;
       document.getElementById("0").style.backgroundColor = "";
       document.getElementById("1").style.backgroundColor = "";
       document.getElementById("2").style.backgroundColor = "";
@@ -193,6 +242,7 @@ export const QuizPage = function ss(props) {
     setIsWrong(true);
     wrongAnswerVar.play();
   };
+
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row " style={{ height: "100%" }}>
@@ -251,7 +301,7 @@ export const QuizPage = function ss(props) {
                     borderColor: "white",
                   }}
                 >
-                  {question}{" "}
+                  {question}
                 </div>
               )}
               {isWrong && (
