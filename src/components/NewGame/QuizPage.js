@@ -70,7 +70,13 @@ export const QuizPage = function ss(props) {
             fontWeight: "bolder",
           }}
         >
-          {remainingTime}
+          <div className="d-flex flex-column justify-content-center align-items-center">
+            <div>{remainingTime}</div>
+            <div style={{ fontSize: "70%" }}>
+              {remainingTime > 1 && <>secondes</>}
+              {remainingTime == 1 && <>seconde</>}
+            </div>
+          </div>
         </div>
       </div>
     );
