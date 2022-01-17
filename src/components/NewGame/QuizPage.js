@@ -6,6 +6,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { BsArrowRepeat } from "react-icons/bs";
+import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import correctAnswer from "../../assets/correctAnswer1.mp3";
@@ -42,6 +43,7 @@ export const QuizPage = function ss(props) {
   const [answer, setAnswer] = useState(0);
   const [key, setKey] = useState(0);
   const [isWrong, setIsWrong] = useState(false);
+  const [mute, setIsMute] = useState(false);
   const level = props.recentLevel;
   let indexRandom;
   // START__Timer
@@ -242,7 +244,19 @@ export const QuizPage = function ss(props) {
     setIsWrong(true);
     wrongAnswerVar.play();
   };
-
+  const volumeHandler = () => {
+    if (mute == false) {
+      setIsMute(true);
+      correctAnswerVar.volume = 0.0;
+      wrongAnswerVar.volume = 0.0;
+      suspenseSoundVar.volume = 0.0;
+    } else {
+      setIsMute(false);
+      correctAnswerVar.volume = 1.0;
+      wrongAnswerVar.volume = 1.0;
+      suspenseSoundVar.volume = 1.0;
+    }
+  };
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row " style={{ height: "100%" }}>
@@ -297,7 +311,6 @@ export const QuizPage = function ss(props) {
                     background: "#16ad85",
                     borderRadius: "19px",
                     color: "white",
-                    fontFamily: " var(--font-family-GESSTwoBold)",
                     borderColor: "white",
                   }}
                 >
@@ -313,7 +326,6 @@ export const QuizPage = function ss(props) {
                     background: "#16ad85",
                     borderRadius: "19px",
                     color: "white",
-                    fontFamily: " var(--font-family-GESSTwoBold)",
                     borderColor: "white",
                     lineHeight: "300%",
                   }}
@@ -373,20 +385,43 @@ export const QuizPage = function ss(props) {
               style={{ height: "100%" }}
             >
               <div
-                className="d-flex flex-column justify-content-center align-items-center animate__animated animate__slideInRight"
+                className="d-flex flex-column align-items-center flex-column animate__animated animate__slideInRight"
                 style={{ height: "50%" }}
               >
-                <CountdownCircleTimer
-                  key={key}
-                  size="100"
-                  strokeWidth="8"
-                  isPlaying
-                  duration={60}
-                  colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
-                  onComplete={timeout}
+                <div
+                  className="mb-auto align-items-center justify-content-center "
+                  style={{ marginTop: "10%" }}
                 >
-                  {renderTime}
-                </CountdownCircleTimer>
+                  <button
+                    type="button"
+                    className="btn  animate__animated animate__slideInRight btn-circle btn-md"
+                    id="volume"
+                    style={{
+                      backgroundColor: "#682481",
+                      color: "white",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      marginBottom: "10%",
+                    }}
+                    onClick={volumeHandler}
+                  >
+                    {mute && <FaVolumeMute />}
+                    {!mute && <FaVolumeUp />}
+                  </button>
+                </div>
+                <div className="p-2">
+                  <CountdownCircleTimer
+                    key={key}
+                    size="100"
+                    strokeWidth="8"
+                    isPlaying
+                    duration={60}
+                    colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
+                    onComplete={timeout}
+                  >
+                    {renderTime}
+                  </CountdownCircleTimer>
+                </div>
               </div>
               <div
                 className="d-flex flex-column  justify-content-center align-items-items"
