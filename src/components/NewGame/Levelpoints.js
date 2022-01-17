@@ -9,7 +9,7 @@ import React from "react";
 
 const Levelpoints = (props) => {
   let back = "";
-  let rr = "rgb(65 157 65)";
+  let rr = "#50bb6b";
   let checkPoint = "";
   let font = "white";
   if (props.level - 1 == props.recentLevelToLevelpoints) {
@@ -48,7 +48,7 @@ const Levelpoints = (props) => {
         <div
           style={{
             fontFamily: "var(--font-family-Graphik)",
-            width: "10%",
+            width: "15%",
             display: "flex",
             backgroundColor: checkPoint,
             alignItems: "center",
