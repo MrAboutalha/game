@@ -9,22 +9,33 @@ import React from "react";
 
 const Levelpoints = (props) => {
   let back = "";
+  let rr = "rgb(65 157 65)";
   let checkPoint = "";
   let font = "white";
   if (props.level - 1 == props.recentLevelToLevelpoints) {
     back = "#ffc107";
     font = "black";
+    rr = back;
   }
 
   if (props.recentLevelToLevelpoints > 3) {
-    if (props.level == 4) checkPoint = "#682481";
+    if (props.level == 4) {
+      checkPoint = "#682481";
+      rr = "";
+    }
   }
   if (props.recentLevelToLevelpoints > 7) {
-    if (props.level == 8) checkPoint = "#682481";
+    if (props.level == 8) {
+      checkPoint = "#682481";
+      rr = "";
+    }
   }
 
   if (props.recentLevelToLevelpoints > 11)
-    if (props.level == 12) checkPoint = "#682481";
+    if (props.level == 12) {
+      checkPoint = "#682481";
+      rr = "";
+    }
   return (
     <div
       className="flex-fill d-flex flex-row"
@@ -46,7 +57,20 @@ const Levelpoints = (props) => {
             height: "100%",
           }}
         >
-          {props.level}
+          <div
+            style={{
+              fontFamily: "var(--font-family-Graphik)",
+              width: "100%",
+              display: "flex",
+              backgroundColor: rr,
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: "bolder",
+              height: "100%",
+            }}
+          >
+            {props.level}
+          </div>{" "}
         </div>
         &nbsp; &nbsp;
         <div

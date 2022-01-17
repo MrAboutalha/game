@@ -291,7 +291,7 @@ export const QuizPage = function ss(props) {
                 backgroundSize: "cover",
 
                 width: "100%",
-                height: "47%",
+                height: "42%",
                 textAlign: "center",
                 backgroundPosition: "0 0",
               }}
