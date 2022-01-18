@@ -320,7 +320,7 @@ export const QuizPage = function ss(props) {
                     borderColor: "white",
                   }}
                 >
-                  {question}
+                  <strong> {question}</strong>
                 </div>
               )}
               {isWrong && (
