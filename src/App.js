@@ -5,11 +5,15 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import currentWeekNumber from "current-week-number";
+import currentDayNumber from "current-day-number";
+
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css/animate.min.css";
 import { QuizPage } from "./components/NewGame/QuizPage";
 
+let recentLevel;
 export function App() {
   //  Object 'questions' holds all questions
   const questions = [
@@ -752,16 +756,49 @@ export function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   // function to start the game
   const startPlayingHandler = () => {
+    localStorage.setItem(
+      "actualWeek",
+      localStorage.getItem("actualWeek")
+        ? localStorage.getItem("actualDay")
+        : new Date().getTime()
+    );
+    localStorage.setItem(
+      "actualDay",
+      localStorage.getItem("actualDay")
+        ? localStorage.getItem("actualDay")
+        : new Date().getTime()
+    );
+    localStorage.setItem(
+      "hasEnterTheGame",
+      localStorage.getItem("hasEnterTheGame")
+        ? localStorage.getItem("hasEnterTheGame")
+        : false
+    );
+    if (localStorage.getItem("recentLevel") === null) {
+      recentLevel = 0;
+      localStorage.setItem("recentLevel", 0);
+    } else {
+      recentLevel = localStorage.getItem("recentLevel");
+      setLevel(parseInt(recentLevel, 10));
+    }
     setIsPlaying(true);
   };
 
   //  function to move up to the next level
   const onSubmitLevelhandler = (previousLevel) => {
+    localStorage.setItem("actualWeek", new Date().getTime());
+    localStorage.setItem("actualDay", new Date().getTime());
     setLevel(() => previousLevel + 1);
+    localStorage.setItem("recentLevel", previousLevel + 1);
   };
   const onResetHandler = (previousLevel) => {
+    localStorage.setItem("actualWeek", new Date().getTime());
+    localStorage.setItem("actualDay", new Date().getTime());
+    localStorage.setItem("hasEnterTheGame", true);
     setKey((value) => value + 1);
-    setLevel(() => 0);
+    // setLevel(() => 0);
+    setLevel(() => previousLevel);
+    localStorage.setItem("recentLevel", previousLevel);
   };
 
   return (

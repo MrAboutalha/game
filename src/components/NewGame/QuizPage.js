@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* eslint-disable eqeqeq */
@@ -5,6 +6,8 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
+import currentWeekNumber from "current-week-number";
+import currentDayNumber from "current-day-number";
 import { BsArrowRepeat } from "react-icons/bs";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
@@ -37,12 +40,15 @@ export const QuizPage = function ss(props) {
 
   // entries
   const [answers, setAnswers] = useState([]);
+  const [msg, setMsg] = useState("");
   const [helpCrowd, setHelpCrowd] = useState(false);
   const [helpFifty, setHelpFifty] = useState(false);
   const [question, setQuestion] = useState(0);
   const [answer, setAnswer] = useState(0);
   const [key, setKey] = useState(0);
   const [isWrong, setIsWrong] = useState(false);
+  const [isBlock, setIsBlock] = useState(false);
+
   const [mute, setIsMute] = useState(false);
   const level = props.recentLevel;
   let indexRandom;
@@ -190,8 +196,56 @@ export const QuizPage = function ss(props) {
     }
   }, [key, level]);
   // END__Hook to pause the heartbeat soundEffect
-
   useEffect(() => {
+    if (localStorage.getItem("Crowd") == "true")
+      document.getElementById("crowd").disabled = true;
+    if (localStorage.getItem("FiftyUsed") == "true")
+      document.getElementById("fiftyUsed").disabled = true;
+    const firstDayWePlayTheLevel = localStorage.getItem("actualDay");
+    const DayWeGainCheckPoint = localStorage.getItem("actualWeek");
+
+    const hasPlayed = localStorage.getItem("recentLevel");
+    if (hasPlayed) {
+      if (
+        firstDayWePlayTheLevel &&
+        (localStorage.getItem("hasEnterTheGame") === "true" || hasPlayed != 0)
+      ) {
+        if (
+          level == "4" ||
+          level == "8" ||
+          level == "8" ||
+          level == "12" ||
+          level == "12"
+        )
+          if (
+            parseInt(new Date().getTime(), 10) -
+              parseInt(DayWeGainCheckPoint, 10) <=
+            120000
+          ) {
+            setIsBlock(true);
+            setMsg(
+              "لقد وصلت إلى الحد الأقصى لعدد نقاط التفتيش لديك وهو نقطة تفتيش واحدة في الأسبوع"
+            );
+          } else {
+            setIsBlock(false);
+          }
+        else if (
+          parseInt(new Date().getTime(), 10) -
+            parseInt(firstDayWePlayTheLevel, 10) <=
+          60000
+        ) {
+          setIsBlock(true);
+          setMsg(
+            "لقد وصلت إلى الحد الأقصى لعدد الأسئلة للإجابة وهو سؤال واحد في اليوم يرجى العودة غدًا"
+          );
+          correctAnswerVar.volume = 0.0;
+          wrongAnswerVar.volume = 0.0;
+          suspenseSoundVar.volume = 0.0;
+        } else {
+          setIsBlock(false);
+        }
+      }
+    }
     localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
   }, [level]);
 
@@ -214,7 +268,6 @@ export const QuizPage = function ss(props) {
       setKey((prevKey) => prevKey + 1);
     } else {
       wrongAnswerVar.play();
-
       setIsWrong(true);
       setHelpCrowd(false);
       setHelpFifty(false);
@@ -236,13 +289,15 @@ export const QuizPage = function ss(props) {
     setKey((prevKey) => prevKey + 1);
     setHelpCrowd(false);
     setHelpFifty(false);
-    props.onReset(-1);
+    props.onReset(props.recentLevel);
   };
   const goCrowdHandler = () => {
+    localStorage.setItem("Crowd", true);
     setHelpCrowd(true);
     document.getElementById("crowd").disabled = true;
   };
   const goFiftyHandler = () => {
+    localStorage.setItem("FiftyUsed", true);
     setHelpFifty(true);
     document.getElementById("fifty").disabled = true;
   };
@@ -309,7 +364,7 @@ export const QuizPage = function ss(props) {
                 textAlign: "center",
               }}
             >
-              {!isWrong && (
+              {!isWrong && !isBlock && (
                 <div
                   className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
                   style={{
@@ -323,7 +378,7 @@ export const QuizPage = function ss(props) {
                   <strong> {question}</strong>
                 </div>
               )}
-              {isWrong && (
+              {isWrong && !isBlock && (
                 <div
                   className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
                   style={{
@@ -339,12 +394,28 @@ export const QuizPage = function ss(props) {
                   انتهت اللعبة
                 </div>
               )}
+              {isBlock && (
+                <div
+                  className="d-flex btnAnsw flex-row align-items-center  justify-content-center  animate__animated animate__shakeX"
+                  style={{
+                    width: "100%",
+                    height: "50%",
+                    background: "#16ad85",
+                    borderRadius: "19px",
+                    color: "white",
+                    borderColor: "white",
+                    lineHeight: "300%",
+                  }}
+                >
+                  {msg}
+                </div>
+              )}
             </div>
             <div
               className="d-flex flex-column justify-content-start align-items-center flex-fill animate__animated animate__backInUp"
               style={{ width: "100%" }}
             >
-              {!isWrong && (
+              {!isWrong && !isBlock && (
                 <Answers
                   answers={answers}
                   onSubmitAnswer={onSubmitAnswerHandler}
@@ -353,7 +424,7 @@ export const QuizPage = function ss(props) {
                   correctAnswr={answer}
                 />
               )}
-              {isWrong && (
+              {isWrong && !isBlock && (
                 <div
                   className="d-flex flex-row align-items-center justify-content-center"
                   style={{ width: "100%" }}
@@ -383,7 +454,7 @@ export const QuizPage = function ss(props) {
             </div>
           </div>
         </div>
-        {!isWrong && (
+        {!isWrong && !isBlock && (
           <div className="col-2">
             {" "}
             <div
