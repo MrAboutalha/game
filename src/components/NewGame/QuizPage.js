@@ -200,7 +200,7 @@ export const QuizPage = function ss(props) {
     if (localStorage.getItem("Crowd") == "true")
       document.getElementById("crowd").disabled = true;
     if (localStorage.getItem("FiftyUsed") == "true")
-      document.getElementById("fiftyUsed").disabled = true;
+      document.getElementById("fifty").disabled = true;
     const firstDayWePlayTheLevel = localStorage.getItem("actualDay");
     const DayWeGainCheckPoint = localStorage.getItem("actualWeek");
 
