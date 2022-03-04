@@ -250,6 +250,9 @@ export const QuizPage = function ss(props) {
   }, [level]);
 
   const onSubmitAnswerHandler = (submitedAnswer) => {
+    correctAnswerVar.volume = 0.0;
+    wrongAnswerVar.volume = 0.0;
+    suspenseSoundVar.volume = 0.0;
     if (submitedAnswer == answer) {
       setIsWrong(false);
       correctAnswerVar.currentTime = 0;
