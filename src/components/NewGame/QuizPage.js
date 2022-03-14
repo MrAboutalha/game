@@ -245,6 +245,9 @@ export const QuizPage = function ss(props) {
           setIsBlock(false);
         }
       }
+      // this is an update
+      const r = "jhjhj";
+      console.log("dd$$", r);
     }
     localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
   }, [level]);
