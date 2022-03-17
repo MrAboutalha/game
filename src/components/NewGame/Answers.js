@@ -18,7 +18,9 @@ export const Answers = function ff(props) {
 
   const theTwoFirstAnswers = firstHalf.map((x) => (
     <Answer
+      idChosen={props.idChosen}
       key={x.id}
+      flash={props.flash}
       identifier={x.id}
       answer={x.value}
       correct={props.correctAnswr}
@@ -28,7 +30,9 @@ export const Answers = function ff(props) {
   ));
   const theTwoLastAnswers = secondHalf.map((x) => (
     <Answer
+      idChosen={props.idChosen}
       key={x.id}
+      flash={props.flash}
       identifier={x.id}
       answer={x.value}
       correct={props.correctAnswr}

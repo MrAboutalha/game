@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
@@ -15,16 +16,26 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import correctAnswer from "../../assets/correctAnswer1.mp3";
 import wrongAnswer from "../../assets/wrongAnswer.mp3";
 import suspense from "../../assets/backGround.mp3";
+import pause from "../../assets/pause.mp3";
 import "./quizPage.css";
 import { Answers } from "./Answers";
 import Levelpoints from "./Levelpoints";
+import SoundButton from "./SoundButton";
 
 export const QuizPage = function ss(props) {
   // _______________________________________ SoundsEffects
 
+const [flash, setFlash] = useState(false);
+
   // _____HeartBeat Sound
   const [suspenseSoundVar, setSuspenseSoundVar] = useState(new Audio(suspense));
   // _____HeartBeat Sound
+
+  // _____pause Sound
+  const [pauseSoundVar, setPauseSoundVar] = useState(new Audio(pause));
+  // __________pause Sound
+
+const [submitedAnswer,setSubmitedAnswer]=useState();
 
   // _____CorrectAnswer Sound
   const [correctAnswerVar, setCorrectAnswerVar] = useState(
@@ -49,7 +60,6 @@ export const QuizPage = function ss(props) {
   const [isWrong, setIsWrong] = useState(false);
   const [isBlock, setIsBlock] = useState(false);
 
-  const [mute, setIsMute] = useState(false);
   const level = props.recentLevel;
   let indexRandom;
   // START__Timer
@@ -197,6 +207,7 @@ export const QuizPage = function ss(props) {
   }, [key, level]);
   // END__Hook to pause the heartbeat soundEffect
   useEffect(() => {
+    
     if (localStorage.getItem("Crowd") == "true")
       document.getElementById("crowd").disabled = true;
     if (localStorage.getItem("FiftyUsed") == "true")
@@ -220,73 +231,84 @@ export const QuizPage = function ss(props) {
           if (
             parseInt(new Date().getTime(), 10) -
               parseInt(DayWeGainCheckPoint, 10) <=
-            120000
+            20000
           ) {
             setIsBlock(true);
             setMsg(
               "لقد وصلت إلى الحد الأقصى لعدد نقاط التفتيش لديك وهو نقطة تفتيش واحدة في الأسبوع"
             );
+            pauseSoundVar.play();
+            suspenseSoundVar.volume = 0.0;
           } else {
             setIsBlock(false);
           }
         else if (
           parseInt(new Date().getTime(), 10) -
             parseInt(firstDayWePlayTheLevel, 10) <=
-          60000
+          10000
         ) {
           setIsBlock(true);
           setMsg(
             "لقد وصلت إلى الحد الأقصى لعدد الأسئلة للإجابة وهو سؤال واحد في اليوم يرجى العودة غدًا"
           );
-          correctAnswerVar.volume = 0.0;
-          wrongAnswerVar.volume = 0.0;
-          suspenseSoundVar.volume = 0.0;
+          pauseSoundVar.play();
+                    suspenseSoundVar.volume = 0.0;
         } else {
           setIsBlock(false);
         }
       }
-      // this is an update
-      const r = "jhjhj";
-      console.log("dd$$", r);
     }
     localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
   }, [level]);
 
   const onSubmitAnswerHandler = (submitedAnswer) => {
+    setSubmitedAnswer(submitedAnswer);
+    setFlash(true)
     correctAnswerVar.volume = 0.0;
     wrongAnswerVar.volume = 0.0;
     suspenseSoundVar.volume = 0.0;
     if (submitedAnswer == answer) {
       setIsWrong(false);
       correctAnswerVar.currentTime = 0;
+      correctAnswerVar.volume = 1;
       correctAnswerVar.play();
+      setTimeout(()=>{correctAnswerVar.volume = 0}, 4000)
       setHelpCrowd(false);
       setHelpFifty(false);
-      props.onSubmitLevel(props.recentLevel);
-      document.getElementById("0").style.backgroundColor = "";
-      document.getElementById("1").style.backgroundColor = "";
-      document.getElementById("2").style.backgroundColor = "";
-      document.getElementById("3").style.backgroundColor = "";
-      document.getElementById("0").disabled = false;
-      document.getElementById("1").disabled = false;
-      document.getElementById("2").disabled = false;
-      document.getElementById("3").disabled = false;
-      setKey((prevKey) => prevKey + 1);
+      setTimeout(()=>{
+        props.onSubmitLevel(props.recentLevel);
+        document.getElementById("0").style.backgroundColor = "";
+        document.getElementById("1").style.backgroundColor = "";
+        document.getElementById("2").style.backgroundColor = "";
+        document.getElementById("3").style.backgroundColor = "";
+        document.getElementById("0").disabled = false;
+        document.getElementById("1").disabled = false;
+        document.getElementById("2").disabled = false;
+        document.getElementById("3").disabled = false;
+        setKey((prevKey) => prevKey + 1);
+        setFlash(false)
+      }, 4000)
+
+     
     } else {
+      wrongAnswerVar.volume = 1;
+      wrongAnswerVar.currentTime = 0;
       wrongAnswerVar.play();
+      correctAnswerVar.volume = 0;
+      setTimeout(()=>{
       setIsWrong(true);
       setHelpCrowd(false);
       setHelpFifty(false);
       setKey((prevKey) => prevKey + 1);
-      correctAnswerVar.volume = 0;
-      document.getElementById("0").style.backgroundColor = "";
-      document.getElementById("1").style.backgroundColor = "";
-      document.getElementById("2").style.backgroundColor = "";
-      document.getElementById("3").style.backgroundColor = "";
-      document.getElementById("0").disabled = false;
-      document.getElementById("1").disabled = false;
-      document.getElementById("2").disabled = false;
-      document.getElementById("3").disabled = false;
+      if (document.getElementById("0")!=null) document.getElementById("0").style.backgroundColor = "";
+      if (document.getElementById("1")!=null)document.getElementById("1").style.backgroundColor = "";
+      if (document.getElementById("2")!=null)document.getElementById("2").style.backgroundColor = "";
+      if (document.getElementById("3")!=null)document.getElementById("3").style.backgroundColor = "";
+      if (document.getElementById("0")!=null)document.getElementById("0").disabled = false;
+      if (document.getElementById("1")!=null)document.getElementById("1").disabled = false;
+      if (document.getElementById("2")!=null)document.getElementById("2").disabled = false;
+      if (document.getElementById("3")!=null)document.getElementById("3").disabled = false;        setFlash(false)
+    }, 4000)
     }
   };
 
@@ -301,29 +323,30 @@ export const QuizPage = function ss(props) {
     localStorage.setItem("Crowd", true);
     setHelpCrowd(true);
     document.getElementById("crowd").disabled = true;
+
   };
   const goFiftyHandler = () => {
     localStorage.setItem("FiftyUsed", true);
     setHelpFifty(true);
     document.getElementById("fifty").disabled = true;
+   
   };
   const timeout = () => {
     setIsWrong(true);
     wrongAnswerVar.play();
   };
-  const volumeHandler = () => {
+  const volumeHandler = (mute) => {
     if (mute == false) {
-      setIsMute(true);
       correctAnswerVar.volume = 0.0;
       wrongAnswerVar.volume = 0.0;
       suspenseSoundVar.volume = 0.0;
     } else {
-      setIsMute(false);
       correctAnswerVar.volume = 1.0;
       wrongAnswerVar.volume = 1.0;
       suspenseSoundVar.volume = 1.0;
     }
   };
+  console.log("adqsdqsdqsd")
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row " style={{ height: "100%" }}>
@@ -402,7 +425,7 @@ export const QuizPage = function ss(props) {
               )}
               {isBlock && (
                 <div
-                  className="d-flex btnAnsw flex-row align-items-center  justify-content-center  animate__animated animate__shakeX"
+                  className="d-flex btnAnsw flex-row align-items-center  justify-content-center  animate__animated animate__jackInTheBox"
                   style={{
                     width: "100%",
                     height: "50%",
@@ -423,7 +446,9 @@ export const QuizPage = function ss(props) {
             >
               {!isWrong && !isBlock && (
                 <Answers
+                  idChosen={submitedAnswer}
                   answers={answers}
+                  flash={flash}
                   onSubmitAnswer={onSubmitAnswerHandler}
                   helpCrowd={helpCrowd}
                   helpFifty={helpFifty}
@@ -475,22 +500,7 @@ export const QuizPage = function ss(props) {
                   className="mb-auto align-items-center justify-content-center "
                   style={{ marginTop: "10%" }}
                 >
-                  <button
-                    type="button"
-                    className="btn  animate__animated animate__slideInRight btn-circle btn-md"
-                    id="volume"
-                    style={{
-                      backgroundColor: "#682481",
-                      color: "white",
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      marginBottom: "10%",
-                    }}
-                    onClick={volumeHandler}
-                  >
-                    {mute && <FaVolumeMute />}
-                    {!mute && <FaVolumeUp />}
-                  </button>
+             <SoundButton volumeHandler={volumeHandler} correctAnswerVar={correctAnswerVar} wrongAnswerVar={wrongAnswerVar} suspenseSoundVar={suspenseSoundVar}/>
                 </div>
                 <div className="p-2">
                   <CountdownCircleTimer

@@ -1,0 +1,36 @@
+@keyframes glowing {
+    0% {
+      background-color: #2ba805;
+      box-shadow: 0 0 3px #2ba805;
+    }
+    50% {
+      background-color: #49e819;
+      box-shadow: 0 0 10px #49e819;
+    }
+    100% {
+      background-color: #2ba805;
+      box-shadow: 0 0 3px #2ba805;
+    }
+  }
+
+  @keyframes glowingWrong {
+    10% {
+      background-color: #a80505;
+      box-shadow: 0 0 3px #a80505;
+    }
+    50% {
+      background-color: #e81919;
+      box-shadow: 0 0 10px #e81919;
+    }
+    100% {
+        background-color: #a80505;
+        box-shadow: 0 0 3px #a80505;
+    }
+  }
+
+.correct{
+animation: glowing 400ms infinite;
+ }
+ .wrong{
+    animation: glowingWrong 400ms infinite;
+     }
