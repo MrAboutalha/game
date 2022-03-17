@@ -346,7 +346,6 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
       suspenseSoundVar.volume = 1.0;
     }
   };
-  console.log("adqsdqsdqsd")
   return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row " style={{ height: "100%" }}>
