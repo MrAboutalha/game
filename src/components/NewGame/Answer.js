@@ -8,7 +8,6 @@ import React from "react";
 import "./answers.css";
 
 export const Answer = (props) => {
-  // for every button component, we add "onSubmitAnswerHandler" function so we can lift the state up
   const onSubmitAnswerHandler = (e) => {
     props.onSubmitAnswer(e.target.id);
   };
@@ -29,11 +28,8 @@ export const Answer = (props) => {
     <button
       id={props.identifier}
       type="button"
-      className={`btnAnsw ${back}`}
+      className={`btnAnsw ${back} answers`}
       style={{
-        marginLeft: "3%",
-        marginRight: "1.5%",
-        width: "100%",
         backgroundColor: back,
       }}
       value={props.answer}

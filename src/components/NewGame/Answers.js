@@ -56,13 +56,13 @@ export const Answers = function ff(props) {
   return (
     <>
       <div
-        className="d-flex flex-row"
+        className="d-flex flex-column flex-sm-row flex-md-row"
         style={{ width: "100%", position: "relative", zIndex: "2000" }}
       >
         {theTwoFirstAnswers}
       </div>{" "}
       <div
-        className="d-flex flex-row"
+        className="d-flex flex-column flex-sm-row flex-md-row"
         style={{ width: "100%", position: "relative", zIndex: "2000" }}
       >
         {theTwoLastAnswers}

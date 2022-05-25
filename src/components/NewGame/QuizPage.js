@@ -1,55 +1,38 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
-/* eslint-disable eqeqeq */
-/* eslint-disable prefer-template */
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-shadow */
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
-import currentWeekNumber from "current-week-number";
-import currentDayNumber from "current-day-number";
+
+// !!ICONS
 import { BsArrowRepeat } from "react-icons/bs";
-import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import "bootstrap/dist/css/bootstrap.min.css";
-import correctAnswer from "../../assets/correctAnswer1.mp3";
-import wrongAnswer from "../../assets/wrongAnswer.mp3";
-import suspense from "../../assets/backGround.mp3";
-import pause from "../../assets/pause.mp3";
-import "./quizPage.css";
+
+// !!SOUNDS
+import correctAnswer from "../../assets/audioFiles/correctAnswer.min.mp3";
+import wrongAnswer from "../../assets/audioFiles/wrongAnswer.min.mp3";
+import suspense from "../../assets/audioFiles/backGround.min.mp3";
+import pause from "../../assets/audioFiles/pause.min.mp3";
+
+// !!COMPONENTS
 import { Answers } from "./Answers";
 import Levelpoints from "./Levelpoints";
+import MainTimer from "./MainTimer";
 import SoundButton from "./SoundButton";
 
+// !IMAGES
+import manAndWoman from "../../assets/images/manAndWoman.png";
+import crowd from "../../assets/images/crowd.png";
+// !STYLES
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./quizPage.css";
+
 export const QuizPage = function ss(props) {
-  // _______________________________________ SoundsEffects
-
-const [flash, setFlash] = useState(false);
-
-  // _____HeartBeat Sound
-  const [suspenseSoundVar, setSuspenseSoundVar] = useState(new Audio(suspense));
-  // _____HeartBeat Sound
-
-  // _____pause Sound
-  const [pauseSoundVar, setPauseSoundVar] = useState(new Audio(pause));
-  // __________pause Sound
-
-const [submitedAnswer,setSubmitedAnswer]=useState();
-
-  // _____CorrectAnswer Sound
-  const [correctAnswerVar, setCorrectAnswerVar] = useState(
-    new Audio(correctAnswer)
-  );
-  // _____CorrectAnswer Sound
-
-  // _____WrongAnswer Sound
-  const [wrongAnswerVar, setWrongAnswerVar] = useState(new Audio(wrongAnswer));
-  // _____WrongAnswer Sound
-
-  // _______________________________________ SoundsEffects
-
-  // entries
+  // !HOOKS
+  const { recentLevel, level, onSubmitLevel, onReset, suggestedQuestions } =
+    props;
+  const [suspenseSoundVar] = useState(new Audio(suspense));
+  const [pauseSoundVar] = useState(new Audio(pause));
+  const [correctAnswerVar] = useState(new Audio(correctAnswer));
+  const [wrongAnswerVar] = useState(new Audio(wrongAnswer));
   const [answers, setAnswers] = useState([]);
   const [msg, setMsg] = useState("");
   const [helpCrowd, setHelpCrowd] = useState(false);
@@ -59,63 +42,26 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
   const [key, setKey] = useState(0);
   const [isWrong, setIsWrong] = useState(false);
   const [isBlock, setIsBlock] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(true);
+  const [flash, setFlash] = useState(false);
+  const [submitedAnswer, setSubmitedAnswer] = useState();
 
-  const level = props.recentLevel;
+  const a = window.matchMedia("(max-width: 575px)");
   let indexRandom;
-  // START__Timer
-  const renderTime = ({ remainingTime }) => {
-    if (remainingTime === 0) {
-      return (
-        <div
-          style={{
-            fontFamily: "var(--font-family-Graphik)",
-            color: "white",
-          }}
-          className="timer"
-        />
-      );
-    }
-
-    return (
-      <div className="timer">
-        <div
-          style={{
-            fontSize: "110%",
-            fontFamily: "var(--font-family-Graphik)",
-            color: "white",
-            fontWeight: "bolder",
-          }}
-        >
-          <div className="d-flex flex-column justify-content-center align-items-center">
-            <div>{remainingTime}</div>
-            <div style={{ fontSize: "70%" }}>
-              {remainingTime > 1 && <>secondes</>}
-              {remainingTime == 1 && <>seconde</>}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  // END__Timer
-
-  //  START__Levels
   let levelList = <h3>NAN</h3>;
-  if (props.level.length > 0) {
-    levelList = props.level.map((x) => (
+  if (level.length > 0) {
+    levelList = level.map((x) => (
       <Levelpoints
         key={x.id}
         level={x.level}
         points={x.points}
-        recentLevelToLevelpoints={props.recentLevel}
+        recentLevelToLevelpoints={recentLevel}
       />
     ));
   }
-  // END__Levels
 
-  // START__Function to add to the localStorage the current question
   const localStorageSetQuestionAlreadyChosen = (questionComposedId) => {
-    const entryModified = questionComposedId + "/";
+    const entryModified = `${questionComposedId}/`;
     if (localStorage.getItem("QuestionAlreadyChosen") != null) {
       localStorage.setItem(
         "QuestionAlreadyChosen",
@@ -125,9 +71,7 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
       localStorage.setItem("QuestionAlreadyChosen", entryModified);
     }
   };
-  // END__Function to add to the localStorage the current question
 
-  // START__Function to check whether a subQuestion for a single main question has already been presented and suggest a new one
   const localStorageCheckForQuestionIfItWasAlreadyChosen = (levelEntry) => {
     let i;
 
@@ -139,12 +83,12 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
       for (i = 0; i < 4; i += 1) {
         let j;
         for (j = 0; j < questionsStored.length; j += 1) {
-          if (questionsStored[j] == levelEntry + "" + i) {
+          if (questionsStored[j] == `${levelEntry}${i}`) {
             break;
           }
         }
         if (j >= questionsStored.length) {
-          unViewedQuestionsArray.push(levelEntry + "" + i);
+          unViewedQuestionsArray.push(`${levelEntry}${i}`);
         }
       }
       let newVal = "";
@@ -152,62 +96,55 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
         for (let w = 0; w < 4; w += 1) {
           newVal = localStorage
             .getItem("QuestionAlreadyChosen")
-            .replace(levelEntry + "" + w + "/", "");
+            .replace(`${levelEntry}${w}/`, "");
           localStorage.setItem("QuestionAlreadyChosen", newVal);
           indexRandom = Math.floor(Math.random() * 4);
         }
-        localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
-        setAnswers(props.suggestedQuestions[indexRandom].content);
-        setQuestion(props.suggestedQuestions[indexRandom].question);
-        setAnswer(props.suggestedQuestions[indexRandom].correct);
+        localStorageSetQuestionAlreadyChosen(`${levelEntry}${indexRandom}`);
+        setAnswers(suggestedQuestions[indexRandom].content);
+        setQuestion(suggestedQuestions[indexRandom].question);
+        setAnswer(suggestedQuestions[indexRandom].correct);
       } else {
         indexRandom = Math.floor(Math.random() * unViewedQuestionsArray.length);
         localStorageSetQuestionAlreadyChosen(
           unViewedQuestionsArray[indexRandom]
         );
         setAnswers(
-          props.suggestedQuestions[
+          suggestedQuestions[
             parseInt(unViewedQuestionsArray[indexRandom], 10) % 10
           ].content
         );
         setQuestion(
-          props.suggestedQuestions[
+          suggestedQuestions[
             parseInt(unViewedQuestionsArray[indexRandom] % 10, 10)
           ].question
         );
         setAnswer(
-          props.suggestedQuestions[
+          suggestedQuestions[
             parseInt(unViewedQuestionsArray[indexRandom] % 10, 10)
           ].correct
         );
       }
     } else {
       indexRandom = Math.floor(Math.random() * 4);
-      localStorageSetQuestionAlreadyChosen(levelEntry + "" + indexRandom);
-      setAnswers(props.suggestedQuestions[indexRandom].content);
-      setQuestion(props.suggestedQuestions[indexRandom].question);
-      setAnswer(props.suggestedQuestions[indexRandom].correct);
+      localStorageSetQuestionAlreadyChosen(`${levelEntry}${indexRandom}`);
+      setAnswers(suggestedQuestions[indexRandom].content);
+      setQuestion(suggestedQuestions[indexRandom].question);
+      setAnswer(suggestedQuestions[indexRandom].correct);
     }
   };
-  // END__Function to check whether a subQuestion for a single main question has already been presented and suggest a new one
-
-  // START__Function to check whether a specific track is playing
   function isPlaying(audelem) {
     return !audelem.paused;
   }
-  // END__Function to check whether a specific track is playing
-
-  // START__Hook to pause the heartbeat soundEffect
   useEffect(() => {
     if (!isPlaying(correctAnswerVar) && !isPlaying(wrongAnswerVar)) {
       suspenseSoundVar.play();
     } else {
       suspenseSoundVar.pause();
     }
-  }, [key, level]);
-  // END__Hook to pause the heartbeat soundEffect
+  }, [key, recentLevel]);
+
   useEffect(() => {
-    
     if (localStorage.getItem("Crowd") == "true")
       document.getElementById("crowd").disabled = true;
     if (localStorage.getItem("FiftyUsed") == "true")
@@ -222,18 +159,19 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
         (localStorage.getItem("hasEnterTheGame") === "true" || hasPlayed != 0)
       ) {
         if (
-          level == "4" ||
-          level == "8" ||
-          level == "8" ||
-          level == "12" ||
-          level == "12"
+          recentLevel == "4" ||
+          recentLevel == "8" ||
+          recentLevel == "8" ||
+          recentLevel == "12" ||
+          recentLevel == "15"
         )
           if (
             parseInt(new Date().getTime(), 10) -
               parseInt(DayWeGainCheckPoint, 10) <=
-            20000
+            200000
           ) {
             setIsBlock(true);
+            console.log("im here 2000");
             setMsg(
               "لقد وصلت إلى الحد الأقصى لعدد نقاط التفتيش لديك وهو نقطة تفتيش واحدة في الأسبوع"
             );
@@ -247,23 +185,25 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
             parseInt(firstDayWePlayTheLevel, 10) <=
           10000
         ) {
+          console.log("im here 1000");
+
           setIsBlock(true);
           setMsg(
             "لقد وصلت إلى الحد الأقصى لعدد الأسئلة للإجابة وهو سؤال واحد في اليوم يرجى العودة غدًا"
           );
           pauseSoundVar.play();
-                    suspenseSoundVar.volume = 0.0;
+          suspenseSoundVar.volume = 0.0;
         } else {
           setIsBlock(false);
         }
       }
     }
-    localStorageCheckForQuestionIfItWasAlreadyChosen(props.recentLevel);
-  }, [level]);
+    localStorageCheckForQuestionIfItWasAlreadyChosen(recentLevel);
+  }, [recentLevel]);
 
   const onSubmitAnswerHandler = (submitedAnswer) => {
     setSubmitedAnswer(submitedAnswer);
-    setFlash(true)
+    setFlash(true);
     correctAnswerVar.volume = 0.0;
     wrongAnswerVar.volume = 0.0;
     suspenseSoundVar.volume = 0.0;
@@ -272,11 +212,13 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
       correctAnswerVar.currentTime = 0;
       correctAnswerVar.volume = 1;
       correctAnswerVar.play();
-      setTimeout(()=>{correctAnswerVar.volume = 0}, 4000)
+      setTimeout(() => {
+        correctAnswerVar.volume = 0;
+      }, 4000);
       setHelpCrowd(false);
       setHelpFifty(false);
-      setTimeout(()=>{
-        props.onSubmitLevel(props.recentLevel);
+      setTimeout(() => {
+        onSubmitLevel(recentLevel);
         document.getElementById("0").style.backgroundColor = "";
         document.getElementById("1").style.backgroundColor = "";
         document.getElementById("2").style.backgroundColor = "";
@@ -285,30 +227,40 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
         document.getElementById("1").disabled = false;
         document.getElementById("2").disabled = false;
         document.getElementById("3").disabled = false;
-        setKey((prevKey) => prevKey + 1);
-        setFlash(false)
-      }, 4000)
-
-     
+        setFlash(false);
+        localStorage.setItem("actualWeek", new Date().getTime());
+        localStorage.setItem("actualDay", new Date().getTime());
+      }, 4000);
     } else {
       wrongAnswerVar.volume = 1;
       wrongAnswerVar.currentTime = 0;
       wrongAnswerVar.play();
       correctAnswerVar.volume = 0;
-      setTimeout(()=>{
-      setIsWrong(true);
-      setHelpCrowd(false);
-      setHelpFifty(false);
-      setKey((prevKey) => prevKey + 1);
-      if (document.getElementById("0")!=null) document.getElementById("0").style.backgroundColor = "";
-      if (document.getElementById("1")!=null)document.getElementById("1").style.backgroundColor = "";
-      if (document.getElementById("2")!=null)document.getElementById("2").style.backgroundColor = "";
-      if (document.getElementById("3")!=null)document.getElementById("3").style.backgroundColor = "";
-      if (document.getElementById("0")!=null)document.getElementById("0").disabled = false;
-      if (document.getElementById("1")!=null)document.getElementById("1").disabled = false;
-      if (document.getElementById("2")!=null)document.getElementById("2").disabled = false;
-      if (document.getElementById("3")!=null)document.getElementById("3").disabled = false;        setFlash(false)
-    }, 4000)
+      setTimeout(() => {
+        setIsWrong(true);
+        setHelpCrowd(false);
+        setHelpFifty(false);
+        setKey((prevKey) => prevKey + 1);
+        if (document.getElementById("0") != null)
+          document.getElementById("0").style.backgroundColor = "";
+        if (document.getElementById("1") != null)
+          document.getElementById("1").style.backgroundColor = "";
+        if (document.getElementById("2") != null)
+          document.getElementById("2").style.backgroundColor = "";
+        if (document.getElementById("3") != null)
+          document.getElementById("3").style.backgroundColor = "";
+        if (document.getElementById("0") != null)
+          document.getElementById("0").disabled = false;
+        if (document.getElementById("1") != null)
+          document.getElementById("1").disabled = false;
+        if (document.getElementById("2") != null)
+          document.getElementById("2").disabled = false;
+        if (document.getElementById("3") != null)
+          document.getElementById("3").disabled = false;
+        setFlash(false);
+        localStorage.setItem("actualWeek", new Date().getTime());
+        localStorage.setItem("actualDay", new Date().getTime());
+      }, 4000);
     }
   };
 
@@ -317,19 +269,17 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
     setKey((prevKey) => prevKey + 1);
     setHelpCrowd(false);
     setHelpFifty(false);
-    props.onReset(props.recentLevel);
+    onReset(recentLevel);
   };
   const goCrowdHandler = () => {
     localStorage.setItem("Crowd", true);
     setHelpCrowd(true);
     document.getElementById("crowd").disabled = true;
-
   };
   const goFiftyHandler = () => {
     localStorage.setItem("FiftyUsed", true);
     setHelpFifty(true);
     document.getElementById("fifty").disabled = true;
-   
   };
   const timeout = () => {
     setIsWrong(true);
@@ -346,79 +296,57 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
       suspenseSoundVar.volume = 1.0;
     }
   };
+  const myFunction = (x) => {
+    if (x.matches) {
+      setIsFullScreen(false);
+    } else {
+      setIsFullScreen(true);
+    }
+  };
+  useEffect(() => {
+    myFunction(a);
+    a.addListener(myFunction);
+  }, []);
+
   return (
-    <div className="container-fluid" style={{ height: "100%" }}>
-      <div className="row " style={{ height: "100%" }}>
-        <div className="col-2 d-flex justify-content-start">
-          <div
-            className="container nopadding d-flex flex-column animate__animated animate__slideInLeft"
-            style={{ height: "90%" }}
-          >
-            <div
-              className="d-flex flex-column flex-grow-1 glow"
-              style={{
-                fontSize: "80%",
-                position: "relative",
-                left: "12%",
-                top: "5%",
-              }}
-            >
+    <div className="container-fluid height100">
+      <div className="row height100">
+        <div className="col-12 col-sm-2 d-flex justify-content-start toplevelContainer">
+          <div className="container padding_0 d-flex flex-row flex-md-column flex-lg-column flex-xl-column flex-sm-column  animate__animated animate__slideInLeft scroreBoardContainer ">
+            <div className="d-flex flex-row flex-sm-column flex-ms-column flex-lg-column flex-xl-column flex-grow-1 glow scroreBoard ">
               {levelList}
-            </div>{" "}
+            </div>
           </div>
         </div>
-        <div className="col-8 d-flex justify-content-center">
-          {" "}
+        {!isWrong && !isBlock && !isFullScreen && (
+          <MainTimer key={key} timeout={timeout} />
+        )}
+        <div className="w-100 breaker" />
+        <div className="col-12 col-sm-8 d-flex justify-content-center">
           <div
             className="d-flex flex-column "
             style={{ height: "100%", width: "100%" }}
           >
             <div
-              className="d-flex "
+              className="d-flex backGroundJti"
               style={{
-                backgroundImage: "url(assets/back3.png)",
-                backgroundSize: "cover",
-
-                width: "100%",
-                height: "42%",
-                textAlign: "center",
-                backgroundPosition: "0 0",
+                backgroundImage: `url(${manAndWoman})`,
               }}
             />
             <div
-              className="d-flex flex-column flex-fill align-items-start justify-content-start"
+              className="d-flex flex-column flex-fill align-items-start justify-content-start questionMargin"
               style={{
                 width: "100%",
                 textAlign: "center",
               }}
             >
               {!isWrong && !isBlock && (
-                <div
-                  className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
-                  style={{
-                    width: "100%",
-                    background: "#16ad85",
-                    borderRadius: "19px",
-                    color: "white",
-                    borderColor: "white",
-                  }}
-                >
+                <div className="d-flex btnAnsw flex-row align-items-center  justify-content-center questionButt">
                   <strong> {question}</strong>
                 </div>
               )}
               {isWrong && !isBlock && (
-                <div
-                  className="d-flex btnAnsw flex-row align-items-center  justify-content-center"
-                  style={{
-                    width: "100%",
-                    height: "50%",
-                    background: "#16ad85",
-                    borderRadius: "19px",
-                    color: "white",
-                    borderColor: "white",
-                    lineHeight: "300%",
-                  }}
-                >
+                <div className="d-flex btnAnsw flex-row align-items-center  justify-content-center gameEnded">
                   انتهت اللعبة
                 </div>
               )}
@@ -431,6 +359,7 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
                     background: "#16ad85",
                     borderRadius: "19px",
                     color: "white",
+
                     borderColor: "white",
                     lineHeight: "300%",
                   }}
@@ -484,67 +413,75 @@ const [submitedAnswer,setSubmitedAnswer]=useState();
             </div>
           </div>
         </div>
+        <div className="w-100 breaker" />
+
         {!isWrong && !isBlock && (
-          <div className="col-2">
-            {" "}
+          <div className="col-12 col-sm-2 col-md-2">
             <div
               className="d-flex flex-column justify-content-center align-items-items"
               style={{ height: "100%" }}
             >
               <div
-                className="d-flex flex-column align-items-center flex-column animate__animated animate__slideInRight"
+                className="d-flex flex-row flex-sm-column  flex-md-column align-items-center animate__animated animate__slideInRight smallDevicesPosition"
                 style={{ height: "50%" }}
               >
                 <div
-                  className="mb-auto align-items-center justify-content-center "
+                  className="mb-auto align-items-center justify-content-center speaker bigDevices "
                   style={{ marginTop: "10%" }}
                 >
-             <SoundButton volumeHandler={volumeHandler} correctAnswerVar={correctAnswerVar} wrongAnswerVar={wrongAnswerVar} suspenseSoundVar={suspenseSoundVar}/>
+                  <SoundButton
+                    volumeHandler={volumeHandler}
+                    correctAnswerVar={correctAnswerVar}
+                    wrongAnswerVar={wrongAnswerVar}
+                    suspenseSoundVar={suspenseSoundVar}
+                  />
                 </div>
-                <div className="p-2">
-                  <CountdownCircleTimer
-                    key={key}
-                    size="100"
-                    strokeWidth="8"
-                    isPlaying
-                    duration={60}
-                    colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
-                    onComplete={timeout}
-                  >
-                    {renderTime}
-                  </CountdownCircleTimer>
-                </div>
+                {isFullScreen && <MainTimer key={key} timeout={timeout} />}
               </div>
               <div
-                className="d-flex flex-column  justify-content-center align-items-items"
+                className="d-flex flex-row  flex-sm-column  justify-content-center align-items-center containerControllers"
                 style={{ height: "50%" }}
               >
-                <button
-                  type="button"
-                  className="btn a btn-warning animate__animated animate__slideInRight btn-circle btn-md"
-                  id="crowd"
-                  style={{
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    marginBottom: "10%",
-                  }}
-                  onClick={goCrowdHandler}
-                >
-                  <img src="assets/crowd.png" alt="crowd " width="60%" />
-                </button>
-                <button
-                  id="fifty"
-                  type="button"
-                  className="btn btn-warning animate__animated animate__slideInRight btn-circle btn-md"
-                  style={{
-                    color: "#540e66",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                  }}
-                  onClick={goFiftyHandler}
-                >
-                  50:50
-                </button>
+                {" "}
+                <div>
+                  <button
+                    type="button"
+                    className="btn a btn-warning animate__animated animate__slideInRight btn-circle btn-md"
+                    id="crowd"
+                    style={{
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      marginBottom: "10%",
+                    }}
+                    onClick={goCrowdHandler}
+                  >
+                    <img src={crowd} alt="crowd " width="60%" />
+                  </button>
+                </div>
+                <div>
+                  <button
+                    id="fifty"
+                    type="button"
+                    className="btn btn-warning animate__animated animate__slideInRight btn-circle btn-md"
+                    style={{
+                      color: "#540e66",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                    onClick={goFiftyHandler}
+                  >
+                    50:50
+                  </button>
+                </div>
+                <div className="smallDevices">
+                  {" "}
+                  <SoundButton
+                    volumeHandler={volumeHandler}
+                    correctAnswerVar={correctAnswerVar}
+                    wrongAnswerVar={wrongAnswerVar}
+                    suspenseSoundVar={suspenseSoundVar}
+                  />
+                </div>
               </div>
             </div>
           </div>

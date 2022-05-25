@@ -20,7 +20,6 @@ const TIME_LIMIT = 20;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
-const remainingPathColor = COLOR_CODES.info.color;
 
 function formatTime(time) {
   const minutes = Math.floor(time / 60);
@@ -70,9 +69,10 @@ function onTimesUp() {
   clearInterval(timerInterval);
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export function startTimer() {
   timerInterval = setInterval(() => {
-    timePassed = timePassed += 1;
+    timePassed += timePassed;
     timeLeft = TIME_LIMIT - timePassed;
     document.getElementById("base-timer-label").innerHTML =
       formatTime(timeLeft);

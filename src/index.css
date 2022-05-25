@@ -6,11 +6,6 @@
   font-family: "master2";
   src: url(./assets/Graphik.woff2) format("woff2");
 }
-:root {
-  --font-family-GESSTwoBold: "master";
-  --font-family-Graphik: "master2";
-}
-
 html,
 body {
   height: 100%;
@@ -21,4 +16,19 @@ body {
 }
 #root {
   height: 100%;
+}
+:root {
+  --font-family-GESSTwoBold: "master";
+  --font-family-Graphik: "master2";
+  /*========== Colors ==========*/
+  --purple-color: #682481;
+  --light-color: white;
+  --first-color-alt: #5a8484;
+  --title-color: #333333;
+  --text-color: #707070;
+  --text-color-light: #a6a6a6;
+  /*========== Sizes ==========*/
+  --fontSize-small: 0.75rem;
+  --fontSize-medium: 1rem;
+  --fontSize-large: 1.25rem;
 }

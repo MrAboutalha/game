@@ -1,36 +1,83 @@
 @keyframes glowing {
-    0% {
-      background-color: #2ba805;
-      box-shadow: 0 0 3px #2ba805;
-    }
-    50% {
-      background-color: #49e819;
-      box-shadow: 0 0 10px #49e819;
-    }
-    100% {
-      background-color: #2ba805;
-      box-shadow: 0 0 3px #2ba805;
-    }
+  0% {
+    background-color: #2ba805;
+    box-shadow: 0 0 3px #2ba805;
   }
-
-  @keyframes glowingWrong {
-    10% {
-      background-color: #a80505;
-      box-shadow: 0 0 3px #a80505;
-    }
-    50% {
-      background-color: #e81919;
-      box-shadow: 0 0 10px #e81919;
-    }
-    100% {
-        background-color: #a80505;
-        box-shadow: 0 0 3px #a80505;
-    }
+  50% {
+    background-color: #49e819;
+    box-shadow: 0 0 10px #49e819;
   }
+  100% {
+    background-color: #2ba805;
+    box-shadow: 0 0 3px #2ba805;
+  }
+}
 
-.correct{
-animation: glowing 400ms infinite;
- }
- .wrong{
-    animation: glowingWrong 400ms infinite;
-     }
+@keyframes glowingWrong {
+  10% {
+    background-color: #a80505;
+    box-shadow: 0 0 3px #a80505;
+  }
+  50% {
+    background-color: #e81919;
+    box-shadow: 0 0 10px #e81919;
+  }
+  100% {
+    background-color: #a80505;
+    box-shadow: 0 0 3px #a80505;
+  }
+}
+
+.correct {
+  animation: glowing 400ms infinite;
+}
+.wrong {
+  animation: glowingWrong 400ms infinite;
+}
+.answers {
+  margin-left: 3%;
+  margin-right: 1.5%;
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+}
+@media only screen and (max-width: 389px) {
+
+  .answers {
+    margin-left: 0%;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    padding: 15px;
+    font-size: 18px;
+  }
+  .correct {
+    animation: none;
+    background-color: #2ba805;
+    box-shadow: 0 0 10px #49e819;
+  }
+  .wrong {
+    animation: none;
+    background-color: #a80505;
+    box-shadow: 0 0 10px #e81919;
+  }
+}
+@media (max-width: 575px) and (min-width: 390px) {
+
+  .answers {
+    margin-left: 0%;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    padding: 15px;
+    font-size: 18px;
+  }
+  .correct {
+    animation: none;
+    background-color: #3cff00!important;
+    box-shadow: 0 0 10px #e0f7d9!important;
+  }
+  .wrong {
+    animation: none;
+    background-color: #ff0000!important;
+    box-shadow: 0 0 10px #ff9e9e!important;
+  }
+}

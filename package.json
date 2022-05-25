@@ -1,36 +1,32 @@
 {
   "name": "game",
-  "homepage": "https://www.saga.ma/jti/connexus",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.1.3",
     "current-day-number": "^1.0.6",
     "current-week-number": "^1.0.7",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "jquery": "^3.6.0",
-    "mobx": "^6.3.12",
-    "popper.js": "^1.16.1",
     "prettier": "^2.5.1",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-countdown-circle-timer": "^2.5.4",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-progressbar-line": "^1.0.2",
     "react-scripts": "5.0.0",
-    "reactjs-localstorage": "^1.0.1",
-    "uifx": "^2.0.7",
-    "web-vitals": "^2.1.2"
+    "uglifyjs-webpack-plugin": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build:react": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build": "npm run build:react && npm run build:bundle",
+    "build:bundle": "webpack --config webpack.config.js"
   },
   "eslintConfig": {
     "extends": [
