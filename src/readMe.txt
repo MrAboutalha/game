@@ -51,3 +51,4 @@ PS: For future uses, You might want to change some or all of the audio files, yo
                   )
     1-let's go with the first one: 
         => After he clicks the play button, +++ startPlayingHandler() +++ function makes sure to fill in the local storage fields with the appropriate values in order to make sure that a player cannot exceed 1 question in 10 seconds range and that 1 checkpoint in 20 seconds range.
+        similarly to the prod version in which we do pretty much the same thing, but we keep in mind that a player cannot exceed 1 question in 24 hours range and 1 checkpoint in 1 whole week.

@@ -60,7 +60,7 @@ export const Answers = function ff(props) {
         style={{ width: "100%", position: "relative", zIndex: "2000" }}
       >
         {theTwoFirstAnswers}
-      </div>{" "}
+      </div>
       <div
         className="d-flex flex-column flex-sm-row flex-md-row"
         style={{ width: "100%", position: "relative", zIndex: "2000" }}

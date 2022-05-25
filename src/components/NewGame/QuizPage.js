@@ -24,15 +24,21 @@ import crowd from "../../assets/images/crowd.png";
 // !STYLES
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./quizPage.css";
+import {
+  accessControllerCurrentDayDev,
+  accessControllerCurrentWeekDev,
+} from "../../utils/helpers";
 
 export const QuizPage = function ss(props) {
-  // !HOOKS
-  const { recentLevel, level, onSubmitLevel, onReset, suggestedQuestions } =
-    props;
+  // !AUDIOS
   const [suspenseSoundVar] = useState(new Audio(suspense));
   const [pauseSoundVar] = useState(new Audio(pause));
   const [correctAnswerVar] = useState(new Audio(correctAnswer));
   const [wrongAnswerVar] = useState(new Audio(wrongAnswer));
+  // !PROPS
+  const { recentLevel, level, onSubmitLevel, onReset, suggestedQuestions } =
+    props;
+  // !HOOKS
   const [answers, setAnswers] = useState([]);
   const [msg, setMsg] = useState("");
   const [helpCrowd, setHelpCrowd] = useState(false);
@@ -165,13 +171,8 @@ export const QuizPage = function ss(props) {
           recentLevel == "12" ||
           recentLevel == "15"
         )
-          if (
-            parseInt(new Date().getTime(), 10) -
-              parseInt(DayWeGainCheckPoint, 10) <=
-            200000
-          ) {
+          if (accessControllerCurrentWeekDev(DayWeGainCheckPoint)) {
             setIsBlock(true);
-            console.log("im here 2000");
             setMsg(
               "لقد وصلت إلى الحد الأقصى لعدد نقاط التفتيش لديك وهو نقطة تفتيش واحدة في الأسبوع"
             );
@@ -180,13 +181,7 @@ export const QuizPage = function ss(props) {
           } else {
             setIsBlock(false);
           }
-        else if (
-          parseInt(new Date().getTime(), 10) -
-            parseInt(firstDayWePlayTheLevel, 10) <=
-          10000
-        ) {
-          console.log("im here 1000");
-
+        else if (accessControllerCurrentDayDev(firstDayWePlayTheLevel)) {
           setIsBlock(true);
           setMsg(
             "لقد وصلت إلى الحد الأقصى لعدد الأسئلة للإجابة وهو سؤال واحد في اليوم يرجى العودة غدًا"
